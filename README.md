@@ -7,7 +7,7 @@ Um sistema com mais de 10 modulos especifico conforme as necessidades desta empr
 
 ## 🛠️ Tecnologias Utilizadas
 
-- **HTML**: Marcação semântica
+- **HTML5**: Marcação semântica
 - **CSS**: Estilização
 - **JavaScript**: Funcionalidade interativa
 - **jQuery**: Manipulação DOM e manipulação de eventos
