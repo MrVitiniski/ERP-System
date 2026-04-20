@@ -1,0 +1,210 @@
+<div class="clean-form">
+  <div class="clean-form__body">
+    <div class="clean-toolbar">
+      <h2 class="clean-title">Gestão de Oficina - Add Frota</h2>
+    </div>
+
+    <!-- 1. FORMULÁRIO DE CADASTRO -->
+    <form id="fAddFrota" method="POST" autocomplete="off">
+      <div class="clean-section">
+        <div class="clean-section__title">Dados do Veículo</div>
+        <hr class="clean-section__rule">
+        <div class="clean-grid">
+          <div class="clean-field c-col-3">
+            <div class="clean-label">Placa *</div>
+            <input name="placa" class="clean-input" required maxlength="10" placeholder="Ex: ABC-1234">
+          </div>
+          <div class="clean-field c-col-5">
+            <div class="clean-label">Veículo / Modelo *</div>
+            <input name="modelo" class="clean-input" required maxlength="80" placeholder="Ex: Scania G440 / Volvo FH">
+          </div>
+          <div class="clean-field c-col-4">
+            <div class="clean-label">Número de Chassi</div>
+            <input name="chassi" class="clean-input" placeholder="Ex: 9BW ZZZ 377 VT 0001">
+          </div>
+          <div class="clean-field c-col-3">
+            <div class="clean-label">Ano</div>
+            <input name="ano" type="number" class="clean-input" min="1900" max="2100" placeholder="Ex: 2022">
+          </div>
+          <div class="clean-field c-col-3">
+            <div class="clean-label">Status</div>
+            <select name="status" class="clean-input">
+              <option value="ativo">Ativo</option>
+              <option value="manutencao">Manutenção</option>
+              <option value="inativo">Inativo</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="clean-section" style="margin-top:20px;">
+        <div class="clean-section__title">Filtros</div>
+        <hr class="clean-section__rule">
+        <div class="clean-grid">
+          <div class="clean-field c-col-6">
+            <div class="clean-label">Filtro de Ar (Primário)</div>
+            <input name="filtro_ar_primario" class="clean-input" placeholder="Ex: P608353">
+          </div>
+          <div class="clean-field c-col-6">
+            <div class="clean-label">Filtro de Ar (Secundário)</div>
+            <input name="filtro_ar_secundario" class="clean-input" placeholder="Ex: P607955">
+          </div>
+          <div class="clean-field c-col-6">
+            <div class="clean-label">Filtro de Combustível (Racor)</div>
+            <input name="filtro_comb_racor" class="clean-input" placeholder="Ex: R90P">
+          </div>
+          <div class="clean-field c-col-6">
+            <div class="clean-label">Filtro de Combustível (Secundário)</div>
+            <input name="filtro_comb_secundario" class="clean-input" placeholder="Ex: BF1212">
+          </div>
+          <div class="clean-field c-col-12">
+            <div class="clean-label">Filtro Óleo Motor</div>
+            <input name="filtro_oleo_motor" class="clean-input" placeholder="Ex: LF16015">
+          </div>
+        </div>
+      </div>
+
+      <div class="clean-section" style="margin-top:20px;">
+        <div class="clean-section__title">Óleos e Capacidades</div>
+        <hr class="clean-section__rule">
+        <div class="clean-grid">
+          <div class="clean-field c-col-3">
+            <div class="clean-label">Qtd. Óleo Motor (L)</div>
+            <input name="qtd_oleo_motor" type="number" step="0.1" class="clean-input" placeholder="Ex: 38">
+          </div>
+          <div class="clean-field c-col-3">
+            <div class="clean-label">Tipo Óleo Motor</div>
+            <input name="tipo_oleo_motor" class="clean-input" placeholder="Ex: 15W40">
+          </div>
+          <div class="clean-field c-col-3">
+            <div class="clean-label">Qtd. Óleo Hidráulico (L)</div>
+            <input name="qtd_oleo_hidraulico" type="number" step="0.1" class="clean-input" placeholder="Ex: 120">
+          </div>
+          <div class="clean-field c-col-3">
+            <div class="clean-label">Tipo Óleo Hidráulico</div>
+            <input name="tipo_oleo_hidraulico" class="clean-input" placeholder="Ex: ISO 68">
+          </div>
+          <div class="clean-field c-col-12" style="margin-top:15px;">
+            <div class="clean-label">Observações Gerais</div>
+            <textarea name="obs" class="clean-input" style="height: 60px; padding:10px;" placeholder="Ex: Garantia de fábrica..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="clean-actions" style="margin-top: 25px;">
+        <button class="clean-btn clean-btn--primary" type="submit">Adicionar Veículo</button>
+        <span id="msg" style="margin-left:15px; opacity:.85; font-size:13px; font-weight:bold;"></span>
+      </div>
+    </form>
+
+    <!-- 2. TABELA DE LISTAGEM (O QUE VOCÊ DEVE ADICIONAR) -->
+    <div class="clean-section" style="margin-top:40px; border-top: 1px solid #e2e8f0; padding-top: 20px;">
+      <div class="clean-section__title" style="color: #475569;">Veículos Cadastrados na Frota</div>
+      <hr class="clean-section__rule">
+      <div class="clean-table-wrap">
+        <table class="clean-table">
+          <thead>
+            <tr style="background: #f8fafc;">
+              <th>Placa</th>
+              <th>Modelo / Veículo</th>
+              <th>Ano</th>
+              <th>Status</th>
+              <th style="text-align:right;">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyFrota">
+            <tr><td colspan="5" style="text-align:center; padding:20px; color:#94a3b8;">Carregando frota...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 3. MODAL DE FICHA TÉCNICA -->
+<div id="modalFicha" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; align-items:center; justify-content:center; padding: 20px;">
+  <div style="background:white; width:100%; max-width:600px; padding:25px; border-radius:8px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
+    <div style="display:flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; margin-bottom: 15px;">
+        <h3 style="margin:0; color:#1e40af;">Ficha Técnica: <span id="ficha_placa"></span></h3>
+        <button onclick="fecharFicha()" style="background:none; border:none; font-size:24px; cursor:pointer;">&times;</button>
+    </div>
+    <div id="conteudoFicha"></div>
+    <button onclick="fecharFicha()" class="clean-btn" style="width:100%; margin-top:20px; background:#64748b; color:white;">Fechar Detalhes</button>
+  </div>
+</div>
+
+<script>
+  // O script deve gerenciar tanto o envio quanto a listagem
+  const f = document.getElementById("fAddFrota");
+  const msg = document.getElementById("msg");
+  let listaFrotaGlobal = [];
+
+  // SALVAR
+  f.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    msg.style.color = "#475569";
+    msg.textContent = "⌛ Salvando...";
+
+    try {
+      const res = await fetch('api/oficina_add_frota.php', { method: 'POST', body: new FormData(f) });
+      const out = await res.json();
+      if (out.ok) {
+        msg.style.color = "#059669";
+        msg.textContent = "✅ Veículo adicionado!";
+        f.reset();
+        carregarFrota();
+        setTimeout(() => msg.textContent = "", 3000);
+      } else { throw new Error(out.error); }
+    } catch (err) {
+      msg.style.color = "#dc2626";
+      msg.textContent = "❌ Erro ao salvar.";
+    }
+  });
+
+  // LISTAR
+  async function carregarFrota() {
+    const tbody = document.getElementById('tbodyFrota');
+    try {
+      const res = await fetch('api/oficina_get_frota.php');
+      const out = await res.json();
+      if (out.ok) {
+        listaFrotaGlobal = out.items;
+        if (listaFrotaGlobal.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px;">Frota vazia.</td></tr>';
+            return;
+        }
+        tbody.innerHTML = listaFrotaGlobal.map(v => `
+          <tr>
+            <td style="font-weight:bold; color:#1e40af;">${v.placa}</td>
+            <td>${v.modelo}</td>
+            <td>${v.ano || '---'}</td>
+            <td><span style="font-size:10px; padding:2px 6px; border-radius:4px; font-weight:bold; background:${v.status === 'ativo' ? '#dcfce7' : '#fee2e2'}; color:${v.status === 'ativo' ? '#166534' : '#991b1b'};">${v.status.toUpperCase()}</span></td>
+            <td style="text-align:right;"><button type="button" class="clean-btn clean-btn--sm" onclick="verFicha('${v.placa}')" style="background:#3b82f6;">Ver Ficha</button></td>
+          </tr>`).join('');
+      }
+    } catch (e) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:red;">Erro ao carregar.</td></tr>'; }
+  }
+
+  // FICHA TÉCNICA
+  window.verFicha = function(placa) {
+    const v = listaFrotaGlobal.find(item => item.placa === placa);
+    if (!v) return;
+    document.getElementById('ficha_placa').textContent = v.placa;
+    document.getElementById('conteudoFicha').innerHTML = `
+        <div style="font-size:13px; line-height:1.6;">
+            <strong>Modelo:</strong> ${v.modelo} | <strong>Ano:</strong> ${v.ano || '---'} | <strong>Chassi:</strong> ${v.chassi || '---'}
+            <h4 style="color:#b45309; border-bottom:1px solid #fed7aa; margin:15px 0 5px 0;">Filtros</h4>
+            Ar (P/S): ${v.filtro_ar_primario || '--'} / ${v.filtro_ar_secundario || '--'}<br>
+            Comb. (R/S): ${v.filtro_comb_racor || '--'} / ${v.filtro_comb_secundario || '--'}<br>
+            Óleo Motor: ${v.filtro_oleo_motor || '--'}
+            <h4 style="color:#1d4ed8; border-bottom:1px solid #bfdbfe; margin:15px 0 5px 0;">Capacidades</h4>
+            Motor: ${v.qtd_oleo_motor}L (${v.tipo_oleo_motor || '--'})<br>
+            Hidráulico: ${v.qtd_oleo_hidraulico}L (${v.tipo_oleo_hidraulico || '--'})
+        </div>`;
+    document.getElementById('modalFicha').style.display = 'flex';
+  }
+  window.fecharFicha = () => document.getElementById('modalFicha').style.display = 'none';
+
+  carregarFrota();
+</script>

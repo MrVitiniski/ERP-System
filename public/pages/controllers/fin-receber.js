@@ -1,0 +1,1 @@
+console,log("fin-receber,js carregando (placeholder).")

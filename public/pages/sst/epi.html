@@ -1,0 +1,134 @@
+<!-- public/pages/sst/epi.html -->
+<section class="sst-topbar">
+  <div class="sst-topbar__icon" aria-hidden="true">🦺</div>
+  <div class="sst-topbar__txt">
+    <div class="sst-topbar__title">SST</div>
+    <div class="sst-topbar__sub">Entrega de EPI · Pedido para o Almoxarifado</div>
+  </div>
+</section>
+
+<section class="sst-whitebox">
+  <form id="f" class="sst-form" autocomplete="off">
+    <div class="sst-grid">
+      <label class="sst-field sst-col-6">
+        <span class="sst-label">Funcionário</span>
+        <select id="funcionario_id" name="funcionario_id" class="sst-input" required>
+          <option value="">Carregando...</option>
+        </select>
+      </label>
+
+      <label class="sst-field sst-col-6">
+        <span class="sst-label">Setor (opcional)</span>
+        <input name="setor" class="sst-input" placeholder="Ex.: Produção, Oficina, RH..." />
+      </label>
+
+      <label class="sst-field sst-col-8">
+        <span class="sst-label">EPI</span>
+        <input name="epi" class="sst-input" placeholder="Ex.: Luva, Óculos, Capacete..." required />
+      </label>
+
+      <label class="sst-field sst-col-4">
+        <span class="sst-label">Quantidade</span>
+        <input name="qtd" class="sst-input" type="number" min="1" step="1" value="1" required />
+      </label>
+
+      <label class="sst-field sst-col-4">
+        <span class="sst-label">Data do pedido</span>
+        <input name="data" class="sst-input" type="date" required />
+      </label>
+
+      <label class="sst-field sst-col-8">
+        <span class="sst-label">Observações (opcional)</span>
+        <input name="obs" class="sst-input" placeholder="Ex.: tamanho, urgência, detalhes..." />
+      </label>
+    </div>
+
+    <div class="sst-actions">
+      <button id="btnGerar" class="sst-btn sst-btn--primary" type="submit">Gerar pedido</button>
+      <div id="msg" class="sst-inline-msg" aria-live="polite"></div>
+    </div>
+  </form>
+</section>
+
+<style>
+  /* Topbar igual ao exemplo */
+  .sst-topbar{
+    display:flex; align-items:center; gap:14px;
+    padding:14px 16px; border-radius:18px;
+    border:1px solid rgba(255,255,255,.10);
+    background:
+      radial-gradient(800px 240px at 20% 0%, rgba(59,130,246,.22), transparent 60%),
+      radial-gradient(520px 240px at 85% 40%, rgba(16,185,129,.18), transparent 60%),
+      rgba(15, 23, 42, .65);
+    box-shadow: 0 18px 48px rgba(0,0,0,.18);
+  }
+  .sst-topbar__icon{
+    width:44px; height:44px; display:flex; align-items:center; justify-content:center;
+    border-radius:14px;
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.12);
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+    font-size:22px;
+  }
+  .sst-topbar__title{ font-size:22px; font-weight:1000; color:#fff; line-height:1.1; }
+  .sst-topbar__sub{ margin-top:4px; font-size:13px; font-weight:700; color:rgba(255,255,255,.78); }
+
+  /* Whitebox igual ao layout */
+  .sst-whitebox{
+    margin-top:12px;
+    background:#fff;
+    border-radius:18px;
+    border:1px solid rgba(15,23,42,.10);
+    box-shadow:0 18px 48px rgba(0,0,0,.22);
+    padding:16px;
+  }
+
+  .sst-form{ max-width: 980px; margin: 0 auto; }
+  .sst-grid{ display:flex; flex-wrap:wrap; gap:12px 14px; }
+  .sst-field{ display:flex; flex-direction:column; gap:6px; min-width:220px; }
+  .sst-label{ font-size:13px; font-weight:900; color:rgba(15,23,42,.82); }
+
+  .sst-input{
+    height:46px;
+    border-radius:12px;
+    border:1px solid rgba(15,23,42,.14);
+    padding:10px 12px;
+    font-size:14px;
+    color:rgba(15,23,42,.92);
+    outline:none;
+  }
+  .sst-input:focus{
+    border-color: rgba(37,99,235,.55);
+    box-shadow: 0 0 0 4px rgba(37,99,235,.12);
+  }
+
+  .sst-col-4{ flex: 1 1 calc(33.333% - 10px); }
+  .sst-col-6{ flex: 1 1 calc(50% - 10px); }
+  .sst-col-8{ flex: 1 1 calc(66.666% - 10px); }
+
+  .sst-actions{ margin-top: 14px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+
+  .sst-btn{
+    height:44px; padding:0 16px; border-radius:999px;
+    font-weight:1000; font-size:14px; cursor:pointer;
+    border:1px solid rgba(37,99,235,.35);
+  }
+  .sst-btn--primary{
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    border: 0;
+    color: #fff;
+    box-shadow: 0 12px 24px rgba(37,99,235,.22);
+  }
+
+  .sst-inline-msg{
+    min-height: 18px;
+    font-size: 13px;
+    font-weight: 800;
+    color: rgba(15,23,42,.72);
+  }
+
+  @media (max-width: 860px){
+    .sst-col-4,.sst-col-6,.sst-col-8{ flex: 1 1 100%; }
+    .sst-whitebox{ padding: 14px; }
+  }
+</style>

@@ -1,0 +1,121 @@
+<div class="clean-form">
+  <div class="clean-form__body">
+    <div class="clean-toolbar">
+      <h2 class="clean-title">Gestão de Mecanica - Ordens de Serviço</h2>
+    </div>
+
+    <!-- FORMULÁRIO DE ABERTURA -->
+    <form id="fNovaOS" method="POST" autocomplete="off">
+      <div class="clean-section">
+        <div class="clean-section__title">Abertura de Nova OS</div>
+        <hr class="clean-section__rule">
+        <div class="clean-grid">
+          <div class="clean-field c-col-3">
+            <div class="clean-label">Data/Hora Abertura *</div>
+            <input type="datetime-local" class="clean-input" id="data_abertura_nova" name="data_abertura" required>
+          </div>
+          <div class="clean-field c-col-6">
+            <div class="clean-label">Equipamento / Veículo *</div>
+            <input class="clean-input" name="equipamento" required placeholder="Ex: Bomba de selagem">
+          </div>
+          <div class="clean-field c-col-3">
+            <div class="clean-label">Prioridade *</div>
+            <select class="clean-input" name="prioridade" required>
+              <option value="Normal">Normal</option>
+              <option value="Alta">Alta</option>
+              <option value="Urgente">Urgente</option>
+            </select>
+          </div>
+          <div class="clean-field c-col-4">
+            <div class="clean-label">Solicitante*</div>
+            <input class="clean-input" name="solicitante" required placeholder="Ex: Quem solicitou?">
+          </div>
+          <div class="clean-field c-col-4">
+            <div class="clean-label">Setor / Departamento*</div>
+            <input class="clean-input" name="setor" required placeholder="Ex: Setor solicitante">
+          </div>
+          <div class="clean-field c-col-4">
+            <div class="clean-label">Mecânico Responsável</div>
+            <input class="clean-input" name="mecanico" required placeholder="Ex: Mêcanico atribuido">
+          </div>
+          <div class="clean-field c-col-12">
+            <div class="clean-label">Descrição do Problema *</div>
+            <textarea class="clean-input" name="descricao_problema" required style="height: 60px; padding:10px;"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="clean-actions">
+        <button class="clean-btn clean-btn--primary" type="submit">Abrir OS</button>
+      </div>
+    </form>
+
+    <!-- OS EM ABERTO -->
+    <div class="clean-section" style="margin-top:40px;">
+      <div class="clean-section__title">Ordens de Serviço Ativas</div>
+      <hr class="clean-section__rule">
+      <div class="clean-table-wrap">
+        <table class="clean-table">
+          <thead>
+            <tr>
+              <th>Nº</th>
+              <th>Abertura</th>
+              <th>Equipamento / Setor</th>
+              <th>Solicitante</th>
+              <th>Defeito</th>
+              <th style="text-align:center;">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyOS"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- HISTÓRICO -->
+    <div class="clean-section" style="margin-top:50px; border-top: 2px solid #eee; padding-top: 20px;">
+      <div class="clean-section__title" style="color: #64748b;">Histórico de Concluídos</div>
+      <hr class="clean-section__rule">
+      <div class="clean-table-wrap">
+        <table class="clean-table" id="tabelaHistoricoOS">
+          <thead>
+            <tr style="background: #f1f5f9;">
+              <th>Nº OS</th>
+              <th>Datas</th>
+              <th>Equipamento / Setor</th>
+              <th>Diagnóstico e Solução</th>
+              <th>Responsáveis</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DE ENCERRAMENTO -->
+<div id="modalEncerrar" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; align-items:center; justify-content:center;">
+  <div style="background:white; width:450px; padding:25px; border-radius:8px; box-shadow:0 20px 40px rgba(0,0,0,0.3);">
+    <h3 style="margin-top:0; color:#b91c1c;">Encerrar OS #<span id="modal_id_os"></span></h3>
+    <form id="formEncerrarOS">
+      <input type="hidden" name="os" id="input_os_id">
+      <div class="clean-field" style="margin-bottom:15px;">
+        <div class="clean-label">Data/Hora Encerramento *</div>
+        <input type="datetime-local" class="clean-input" name="data_fim" id="input_data_fim" required>
+      </div>
+      <div class="clean-field" style="margin-bottom:15px;">
+        <div class="clean-label">Serviço Executado *</div>
+        <input class="clean-input" name="servico" required>
+      </div>
+      <div class="clean-field" style="margin-bottom:20px;">
+        <div class="clean-label">Observações</div>
+        <textarea class="clean-input" name="obs" style="height:50px;"></textarea>
+      </div>
+      <div style="display:flex; gap:10px; justify-content: flex-end;">
+        <button type="button" onclick="fecharModal()" class="clean-btn" style="background:#f1f5f9;">Cancelar</button>
+        <button type="submit" class="clean-btn clean-btn--primary" style="background:#b91c1c;">Concluir OS</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="/sistema/public/pages/controllers/mecanica-os.js"></script>

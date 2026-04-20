@@ -1,0 +1,93 @@
+<div class="clean-form clean-form--wide">
+  <div class="clean-form__body">
+    <div class="clean-toolbar">
+      <div>
+        <h2 class="clean-title">Abastecimento - Frota</h2>
+        <div class="clean-help">Registre abastecimentos e consulte o histórico.</div>
+      </div>
+
+      <div style="display:flex; gap:10px;">
+        <button id="btnAbastLimpar" class="clean-btn clean-btn--sm" type="button">Limpar</button>
+        <button id="btnAbastSalvar" class="clean-btn clean-btn--primary clean-btn--sm" type="button">Salvar</button>
+      </div>
+    </div>
+
+    <div class="clean-section">
+      <div class="clean-section__title">Lançamento</div>
+      <hr class="clean-section__rule"/>
+
+      <div class="clean-grid">
+        <div class="clean-field c-col-4">
+          <div class="clean-label">Motorista Comboio (frentista) *</div>
+          <select id="frentista" class="clean-select" required>
+            <option value="" selected disabled>Selecione...</option>
+            <option value="Cesar">Cesar</option>
+            <option value="Marcos">Marcos</option>
+            <option value="Jonas">Jonas</option>
+            <option value="Thomaz">Thomaz</option>
+            <option value="Alexandre">Alexandre</option>
+          </select>
+        </div>
+
+        <div class="clean-field c-col-4">
+          <div class="clean-label">Data *</div>
+          <input id="dataHora" class="clean-input" type="datetime-local" required />
+        </div>
+
+        <div class="clean-field c-col-4 ac">
+          <div class="clean-label">Equipamento (placa ou modelo) *</div>
+          <input id="qFrota" class="clean-input" placeholder="Digite para buscar..." autocomplete="off" />
+          <input id="frotaId" type="hidden" />
+          <div id="acFrota" class="ac__list" role="listbox" aria-label="Resultados frota"></div>
+          <div class="clean-help" id="frotaSelecionada" style="margin-top:6px;"></div>
+        </div>
+
+        <div class="clean-field c-col-6">
+          <div class="clean-label">Motorista/Operador *</div>
+          <input id="operador" class="clean-input" placeholder="Ex: João da Silva" required />
+        </div>
+
+        <div class="clean-field c-col-3">
+          <div class="clean-label">Horímetro *</div>
+          <input id="horimetro" class="clean-input" type="number" step="0.1" min="0" required />
+        </div>
+
+        <div class="clean-field c-col-3">
+          <div class="clean-label">Litros abastecido *</div>
+          <input id="litros" class="clean-input" type="number" step="0.001" min="0.001" required />
+        </div>
+      </div>
+
+      <div id="msgAbast" class="clean-alert" style="display:none; margin-top:10px;"></div>
+    </div>
+
+    <div class="clean-section">
+      <div class="clean-section__title">Histórico</div>
+      <hr class="clean-section__rule"/>
+
+      <div class="c-col-12" style="margin-top:12px;">
+        <div class="clean-table-wrap">
+          <table class="clean-table" id="tblAbast">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Data</th>
+                <th>Frentista</th>
+                <th>Equipamento</th>
+                <th>Operador</th>
+                <th>Horímetro</th>
+                <th>Litros</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div class="clean-help" style="margin-top:10px;">
+          Dica: use a busca do equipamento para selecionar placa/modelo antes de salvar.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

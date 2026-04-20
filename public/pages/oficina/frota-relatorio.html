@@ -1,0 +1,61 @@
+<div class="clean-form">
+  <div class="clean-form__body">
+    <div class="clean-toolbar">
+      <h2 class="clean-title">Relatório Geral da Frota Técnica</h2>
+    </div>
+
+    <!-- FILTRO DE BUSCA -->
+    <div class="clean-section">
+      <div class="clean-section__title" style="color: #475569;">Busca Inteligente</div>
+      <hr class="clean-section__rule">
+      <div class="clean-grid" style="background: #f8fafc; padding: 15px; border-radius: 6px; border: 1px solid #e2e8f0;">
+        <div class="clean-field c-col-9">
+          <div class="clean-label">Pesquisar Veículo (Placa ou Modelo)</div>
+          <input type="text" id="campoBusca" class="clean-input" placeholder="Digite para filtrar em tempo real...">
+        </div>
+        <div class="clean-field c-col-3" style="display: flex; align-items: flex-end;">
+          <button type="button" class="clean-btn clean-btn--primary" id="btnAtualizar" style="width: 100%; background: #1e40af;">
+            🔄 Atualizar Frota
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABELA DE RESULTADOS -->
+    <div class="clean-section" style="margin-top:30px;">
+      <div class="clean-table-wrap">
+        <table class="clean-table">
+          <thead>
+            <tr style="background: #f1f5f9;">
+              <th>Placa / Prefixo</th>
+              <th>Modelo / Veículo</th>
+              <th>Status</th>
+              <th>Ano</th>
+              <th style="text-align:right;">Ficha Técnica</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyRelatorioFrota">
+            <tr><td colspan="5" style="text-align:center; padding: 40px; color: #94a3b8;">Buscando dados da frota...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DE FICHA TÉCNICA DETALHADA -->
+<div id="modalFichaRel" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; align-items:center; justify-content:center; padding: 20px;">
+  <div style="background:white; width:100%; max-width:700px; padding:25px; border-radius:8px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); max-height: 90vh; overflow-y: auto;">
+    <div style="display:flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; margin-bottom: 15px;">
+        <h3 style="margin:0; color:#1e40af;">Ficha Técnica Completa: <span id="rel_placa"></span></h3>
+        <button onclick="fecharFichaRel()" style="background:none; border:none; font-size:24px; cursor:pointer;">&times;</button>
+    </div>
+    <div id="rel_conteudo_ficha"></div>
+    <div style="display:flex; gap:10px; margin-top:25px;">
+        <button onclick="window.print()" class="clean-btn" style="flex:1; background:#64748b; color:white;">Imprimir Ficha</button>
+        <button onclick="fecharFichaRel()" class="clean-btn" style="flex:1;">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<script src="/sistema/public/pages/controllers/ofi-frota-rel.js"></script>

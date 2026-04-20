@@ -1,0 +1,61 @@
+<!-- 1) SEÇÃO: Saldo do dia (com botão Salvar) -->
+<div class="clean-section" style="margin-top:14px;">
+  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+    <div>
+      <div class="clean-section__title" style="margin:0;">Saldo bancário do dia</div>
+      <div class="clean-help">Informe o saldo real do banco (SCAVARE MINERAÇÃO) para cada dia.</div>
+    </div>
+
+    <button id="btnSalvarSaldo" type="button" class="clean-btn">
+      Salvar
+    </button>
+  </div>
+
+  <div class="clean-grid" style="margin-top:10px;">
+    <div class="clean-field c-col-4">
+      <div class="clean-label">Empresa / Conta</div>
+      <select id="selConta" class="clean-select" disabled>
+        <option value="SCAVARE MINERAÇÃO">SCAVARE MINERAÇÃO</option>
+      </select>
+    </div>
+
+    <div class="clean-field c-col-4">
+      <div class="clean-label">Data</div>
+      <input id="inpDiaCaixa" class="clean-input" type="date">
+    </div>
+
+    <div class="clean-field c-col-4">
+      <div class="clean-label">Saldo bancário (R$)</div>
+      <input id="inpSaldoBanco" class="clean-input" type="text" inputmode="decimal" placeholder="Ex: 1.350,36">
+    </div>
+
+    <div class="clean-field c-col-12">
+      <div class="clean-label">Última atualização</div>
+      <div id="lblSaldoInfo" class="clean-help" style="padding-top:10px;">—</div>
+    </div>
+  </div>
+
+  <div id="msgSaldo" class="clean-alert" style="display:none; margin-top:10px;"></div>
+</div>
+
+<!-- 2) SEÇÃO: Histórico -->
+<div class="clean-section" style="margin-top:14px;">
+  <div class="clean-section__title" style="margin:0;">Histórico de saldos (SCAVARE MINERAÇÃO)</div>
+  <div class="clean-help">Últimos saldos informados (do mais recente para o mais antigo).</div>
+
+  <div style="overflow:auto; margin-top:10px;">
+    <table style="width:100%; border-collapse:collapse;">
+      <thead>
+        <tr>
+          <th style="text-align:left; padding:8px; border-bottom:1px solid #2a2f3a;">Dia</th>
+          <th style="text-align:right; padding:8px; border-bottom:1px solid #2a2f3a;">Saldo (R$)</th>
+          <th style="text-align:left; padding:8px; border-bottom:1px solid #2a2f3a;">Informado por</th>
+          <th style="text-align:left; padding:8px; border-bottom:1px solid #2a2f3a;">Informado em</th>
+        </tr>
+      </thead>
+      <tbody id="tbHistoricoSaldo">
+        <tr><td colspan="4" style="padding:8px;">Carregando…</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>

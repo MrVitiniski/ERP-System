@@ -1,0 +1,109 @@
+<div class="clean-form">
+  <div class="clean-form__body">
+    <div class="clean-toolbar">
+      <div>
+        <h2 class="clean-title">Funcionários</h2>
+        <div class="clean-help">Pesquise por nome, CPF, cargo ou setor.</div>
+      </div>
+
+      <button id="btnReload" class="clean-btn clean-btn--sm" type="button">Recarregar</button>
+    </div>
+
+    <div class="clean-section">
+      <div class="clean-section__title">Buscar</div>
+      <hr class="clean-section__rule"/>
+
+      <div class="clean-grid">
+        <div class="clean-field c-col-12">
+          <div class="clean-label">Digite para filtrar</div>
+          <input id="q" class="clean-input" placeholder="Ex: Severino, 056..., operador, produção..." />
+        </div>
+      </div>
+
+      <div id="msg" class="clean-alert" style="display:none;"></div>
+    </div>
+
+    <div class="clean-section">
+      <div class="clean-section__title">Lista</div>
+      <hr class="clean-section__rule"/>
+
+      <div class="clean-table-wrap">
+        <table class="clean-table" id="tbl">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>CPF</th>
+              <th>Cargo</th>
+              <th>Setor</th>
+              <th>Admissão</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const BASE = "/sistema/public";
+  const msg = document.getElementById("msg");
+  const tbody = document.querySelector("#tbl tbody");
+  const q = document.getElementById("q");
+
+  function fmtCpf11(cpf) {
+    cpf = String(cpf || "").replace(/\D/g, "");
+    if (cpf.length !== 11) return cpf;
+    return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+  }
+
+  function render(items) {
+    const term = (q.value || "").trim().toLowerCase();
+    const filtered = !term ? items : items.filter(it => {
+      const hay = [
+        it.nome_completo, it.cpf, it.cargo, it.setor, it.status
+      ].join(" ").toLowerCase();
+      return hay.includes(term);
+    });
+
+    tbody.innerHTML = filtered.map(it => `
+      <tr>
+        <td>${it.id}</td>
+        <td>${it.nome_completo || ""}</td>
+        <td>${fmtCpf11(it.cpf)}</td>
+        <td>${it.cargo || ""}</td>
+        <td>${it.setor || ""}</td>
+        <td>${it.data_admissao || ""}</td>
+        <td>${it.status || ""}</td>
+      </tr>
+    `).join("");
+
+    msg.textContent = `Total: ${filtered.length}`;
+  }
+
+  async function load() {
+    msg.textContent = "Carregando...";
+    tbody.innerHTML = "";
+
+    const res = await fetch(`${BASE}/api/rh_list.php`, {
+      cache: "no-store",
+      credentials: "same-origin"
+    });
+
+    const out = await res.json().catch(() => ({}));
+    if (!res.ok || !out.ok) {
+      msg.textContent = "Erro ao carregar lista: " + (out.error || res.status);
+      return;
+    }
+
+    window.__RH_ITEMS__ = out.items || [];
+    render(window.__RH_ITEMS__);
+  }
+
+  document.getElementById("btnReload").addEventListener("click", load);
+  q.addEventListener("input", () => render(window.__RH_ITEMS__ || []));
+
+  load();
+</script>

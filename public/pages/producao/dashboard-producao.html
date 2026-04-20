@@ -1,0 +1,69 @@
+<div class="clean-form">
+
+  <div class="clean-toolbar">
+    <h2 class="clean-title">🏭 Dashboard Executivo de Produção</h2>
+  </div>
+
+  <!-- KPIs PRINCIPAIS -->
+  <div class="clean-grid" style="margin-bottom:20px;">
+
+    <div class="c-col-2 card-kpi">
+      <div>Produção Total</div>
+      <h2 id="kpi_total">0</h2>
+    </div>
+
+    <div class="c-col-2 card-kpi">
+      <div>Alimentação</div>
+      <h2 id="kpi_alimentacao">0</h2>
+    </div>
+
+    <div class="c-col-2 card-kpi">
+      <div>Eficiência</div>
+      <h2 id="kpi_eficiencia">0%</h2>
+    </div>
+
+    <div class="c-col-2 card-kpi">
+      <div>Perdas</div>
+      <h2 id="kpi_perda">0</h2>
+    </div>
+
+    <div class="c-col-2 card-kpi">
+      <div>Melhor Turno</div>
+      <h2 id="kpi_turno">-</h2>
+    </div>
+
+    <div class="c-col-2 card-kpi">
+      <div>Melhor Máquina</div>
+      <h2 id="kpi_maquina">-</h2>
+    </div>
+
+  </div>
+
+  <!-- GRÁFICOS -->
+  <div class="clean-grid">
+
+    <div class="c-col-6">
+      <canvas id="grafEvolucao"></canvas>
+    </div>
+
+    <div class="c-col-6">
+      <canvas id="grafTurnos"></canvas>
+    </div>
+
+    <div class="c-col-6">
+      <canvas id="grafMaquinas"></canvas>
+    </div>
+
+    <div class="c-col-6">
+      <canvas id="grafPerdas"></canvas>
+    </div>
+
+  </div>
+
+  <!-- ALERTA -->
+  <div id="alerta" style="margin-top:20px; font-weight:bold;"></div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/sistema/public/pages/controllers/dashboard-diretor.js"></script>

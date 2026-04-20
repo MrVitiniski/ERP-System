@@ -1,0 +1,96 @@
+<div class="clean-form" style="background: #f1f5f9; padding: 20px;">
+  <div class="clean-form__body">
+    
+    <!-- HEADER -->
+    <div class="clean-toolbar" style="background: #0f172a; padding: 20px; border-radius: 12px 12px 0 0; color: #fff;">
+      <h2 class="clean-title" style="color: #f8fafc; margin: 0;">👥 Gestão de Usuários e Permissões</h2>
+      <div class="clean-help" style="color: #94a3b8;">Cadastre usuários e selecione todos os setores que eles podem acessar.</div>
+    </div>
+
+    <!-- FORMULÁRIO -->
+    <form id="fUsuario" class="clean-section" style="background: #fff; border-radius: 0 0 12px 12px; padding: 30px; border: 2px solid #0f172a; border-top: none;">
+      <div class="clean-grid" style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px;">
+        
+        <div class="clean-field" style="grid-column: span 6;">
+          <div class="clean-label" style="font-weight: 800; color: #0f172a;">Nome Completo</div>
+          <input type="text" name="nome" class="clean-input" required style="border: 2px solid #475569;">
+        </div>
+
+        <div class="clean-field" style="grid-column: span 3;">
+          <div class="clean-label" style="font-weight: 800; color: #0f172a;">Login (Usuário)</div>
+          <input type="text" name="usuario" class="clean-input" required style="border: 2px solid #1e40af; font-weight: bold;">
+        </div>
+
+        <div class="clean-field" style="grid-column: span 3;">
+          <div class="clean-label" style="font-weight: 800; color: #0f172a;">Senha</div>
+          <input type="password" name="senha" class="clean-input" required style="border: 2px solid #475569;">
+        </div>
+
+        <!-- SELEÇÃO MÚLTIPLA DE NÍVEIS (CHECKBOXES) -->
+        <div style="grid-column: span 12; margin-top: 10px; background: #f8fafc; padding: 20px; border: 2px solid #e2e8f0; border-radius: 8px;">
+          <div class="clean-label" style="color: #1e40af; font-weight: 900; margin-bottom: 15px; text-transform: uppercase;">
+             Marque os Setores Autorizados:
+          </div>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;">
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600;">
+              <input type="checkbox" name="roles[]" value="ADMIN"> ⭐ ADMIN
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600;">
+              <input type="checkbox" name="roles[]" value="RH"> 👥 RH
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600;">
+              <input type="checkbox" name="roles[]" value="FINANCEIRO"> 💰 FINANCEIRO
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600;">
+              <input type="checkbox" name="roles[]" value="COMPRAS"> 🛒 COMPRAS
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600;">
+              <input type="checkbox" name="roles[]" value="ALMOXARIFADO"> 📦 ALMOXARIFADO
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600;">
+              <input type="checkbox" name="roles[]" value="MECANICA"> 🔧 MECÂNICA
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600;">
+              <input type="checkbox" name="roles[]" value="OFICINA"> 🛠️ OFICINA
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600;">
+              <input type="checkbox" name="roles[]" value="LABORATORIO"> 🔬 LABORATÓRIO
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600;">
+              <input type="checkbox" name="roles[]" value="PRODUÇÃO"> 🏗️ PRODUÇÃO
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600;">
+              <input type="checkbox" name="roles[]" value="BALANÇA"> ⚖️ BALANÇA
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600;">
+              <input type="checkbox" name="roles[]" value="SST"> ⛑️ SST
+            </label>
+          </div>
+        </div>
+
+        <div style="grid-column: span 12; text-align: right; margin-top: 15px;">
+          <button type="submit" class="clean-btn" style="background: #1e40af; color: white; padding: 18px 60px; border-radius: 8px; font-weight: 900; font-size: 1.1rem; cursor: pointer; width: 100%;">
+            💾 SALVAR USUÁRIO COM PERMISSÕES SELECIONADAS
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <!-- TABELA DE USUÁRIOS -->
+    <div class="clean-section" style="background: #fff; margin-top: 20px; border: 2px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead style="background: #f8fafc; border-bottom: 2px solid #e2e8f0;">
+                <tr>
+                    <th style="padding: 15px; text-align: left; color: #475569;">NOME</th>
+                    <th style="padding: 15px; text-align: left; color: #475569;">LOGIN</th>
+                    <th style="padding: 15px; text-align: left; color: #475569;">PERMISSÕES</th>
+                    <th style="padding: 15px; text-align: center; color: #475569;">STATUS</th>
+                    <th style="padding: 15px; text-align: center; color: #475569;">AÇÕES</th>
+                </tr>
+            </thead>
+            <tbody id="tbodyUsuarios"></tbody>
+        </table>
+    </div>
+  </div>
+</div>

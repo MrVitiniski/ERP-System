@@ -1,0 +1,33 @@
+<section class="card">
+  <h2 style="margin-top:0;">Produção · Ordens de Produção</h2>
+</section>
+
+<section class="card" style="margin-top:12px;">
+  <form id="f" class="form">
+    <div class="row">
+      <label>Nº OP<br><input name="op" required></label>
+      <label>Produto<br><input name="produto" required></label>
+    </div>
+
+    <div class="row">
+      <label>Quantidade<br><input name="qtd" type="number" min="1" step="1" required></label>
+      <label>Prazo<br><input name="prazo" type="date"></label>
+    </div>
+
+    <label>Observações<br><input name="obs" maxlength="200"></label>
+
+    <button class="btn btn-primary" type="submit">Salvar OP</button>
+    <span id="msg" style="margin-left:10px; opacity:.85;"></span>
+  </form>
+</section>
+
+<script>
+  const f = document.getElementById("f");
+  const msg = document.getElementById("msg");
+  f.addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    console.log("PRODUCAO OP (MVP)", Object.fromEntries(new FormData(f).entries()));
+    msg.textContent = "Salvo (MVP).";
+    f.reset();
+  });
+</script>

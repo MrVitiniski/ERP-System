@@ -1,0 +1,90 @@
+<div class="clean-form">
+  <div class="clean-form__body">
+
+    <div class="clean-toolbar">
+      <h2 class="clean-title">📊 Dashboard de Produção</h2>
+    </div>
+
+    <!-- FILTRO -->
+    <div class="clean-section" style="background:#f8fafc; padding:20px; border-radius:8px; margin-bottom:20px;">
+      <div class="clean-grid">
+
+        <div class="clean-field">
+  <div class="clean-label">Data Início</div>
+  <input type="date" id="data_inicio" class="clean-input"> <!-- ID deve ser esse -->
+</div>
+
+<div class="clean-field">
+  <div class="clean-label">Data Fim</div>
+  <input type="date" id="data_fim" class="clean-input"> <!-- ID deve ser esse -->
+</div>
+
+<!-- E o botão deve chamar a função -->
+<button type="button" onclick="buscarRelatorios()" class="clean-btn">
+    🔍 Analisar
+</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CARDS -->
+    <div class="clean-grid" style="margin-bottom:20px;">
+
+      <div class="c-col-4">
+        <div class="card">
+          <div class="card__body">
+            <b>📦 Produção Total</b>
+            <h2 id="totalGeral">0 t</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="c-col-4">
+        <div class="card">
+          <div class="card__body">
+            <b>🏆 Melhor Turno</b>
+            <h2 id="melhorTurno">-</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="c-col-4">
+        <div class="card">
+          <div class="card__body">
+            <b>⚙️ Média por Turno</b>
+            <h2 id="mediaTurno">0 t</h2>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- GRÁFICO -->
+    <div style="background:white; padding:20px; border-radius:8px; border:1px solid #e2e8f0;">
+      <canvas id="graficoTurnos" style="height:300px;"></canvas>
+    </div>
+
+    <!-- TABELA -->
+    <div class="clean-table-wrap" style="margin-top:30px;">
+      <table class="clean-table">
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Turno</th>
+            <th>Responsável</th>
+            <th>Total (t)</th>
+            <th>Paradas</th>
+            <th>Motivos</th>
+            <th>Hora Enc.</th>
+          </tr>
+        </thead>
+        <tbody id="tbodyRelatorios"></tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/sistema/public/pages/controllers/prod-relatorios.js"></script>

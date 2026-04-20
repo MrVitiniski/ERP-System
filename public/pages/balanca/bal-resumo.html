@@ -1,0 +1,251 @@
+<div class="clean-form resumo" style="background: #f1f5f9; padding: 20px;">
+  <div class="clean-form__body">
+
+    <div class="clean-toolbar resumo__toolbar">
+      <div class="resumo__head">
+        <h2 class="clean-title resumo__title">📊 Resumo de Movimentação (Quilos)</h2>
+        <div class="clean-help resumo__subtitle">Consolidado de cargas finalizadas por cliente e material.</div>
+      </div>
+
+      <div class="resumo__filters">
+        <label class="resumo__filter">
+          <small>Início:</small>
+          <input type="date" id="res_data_inicio">
+        </label>
+        <label class="resumo__filter">
+          <small>Fim:</small>
+          <input type="date" id="res_data_fim">
+        </label>
+        <button id="btnFiltrarResumo" type="button">🔍 FILTRAR</button>
+      </div>
+    </div>
+
+    <section class="resumo__cota-container" style="background: #fff; border-radius: 12px; padding: 20px; border: 2px solid #0f172a; margin-bottom: 20px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h3 style="margin: 0; font-size: 1.1rem; font-weight: 900; color: #0f172a;">🎯 ACOMPANHAMENTO DE COTAS</h3>
+
+        <button onclick="window.location.hash = '#/bal-cotas-gestao'" class="clean-btn" 
+                style="background: #f8fafc; border: 2px solid #0f172a; padding: 8px 16px; border-radius: 8px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+          ⚙️ CONFIGURAR COTAS
+        </button>
+      </div>
+      
+      <div id="lista-cotas-clientes">
+        <p style="color: #64748b; font-size: 13px; font-style: italic;">Buscando cotas configuradas no sistema...</p>
+      </div>
+    </section>
+
+    <div class="clean-grid clean-grid--2 resumo__grid">
+
+      <section class="clean-section resumo__card resumo__card--cliente">
+        <h3 class="resumo__cardTitle resumo__cardTitle--cliente">🚚 Total por Cliente</h3>
+        <div class="resumo__tableOnly">
+          <div class="table-scroll">
+            <table class="resumo-table">
+              <thead>
+                <tr>
+                  <th>CLIENTE</th>
+                  <th class="t-center">VIAGENS</th>
+                  <th class="t-right">TOTAL (KG)</th>
+                </tr>
+              </thead>
+              <tbody id="tbodyResumoCliente"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="resumo__cardsOnly" id="cardsResumoCliente"></div>
+      </section>
+
+      <section class="clean-section resumo__card resumo__card--material">
+        <h3 class="resumo__cardTitle resumo__cardTitle--material">📦 Total por Material</h3>
+        <div class="resumo__tableOnly">
+          <div class="table-scroll">
+            <table class="resumo-table">
+              <thead>
+                <tr>
+                  <th>MATERIAL</th>
+                  <th class="t-center">VIAGENS</th>
+                  <th class="t-right">TOTAL (KG)</th>
+                </tr>
+              </thead>
+              <tbody id="tbodyResumoMaterial"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="resumo__cardsOnly" id="cardsResumoMaterial"></div>
+        
+        <div class="resumo__actions">
+          <button id="btnImprimirResumo" class="clean-btn resumo__print" type="button">
+            🖨️ IMPRIMIR RELATÓRIO COMPLETO
+          </button>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<style>
+  /* ===== Estilo (mantém a sua paleta) ===== */
+  .resumo__toolbar{
+    background: #0f172a;
+    padding: 20px;
+    border-radius: 12px;
+    color: #fff;
+    margin-bottom: 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .resumo__title{
+    color: #f8fafc;
+    margin: 0;
+  }
+
+  .resumo__subtitle{
+    color: #94a3b8;
+  }
+
+  .resumo__filters{
+    display:flex;
+    gap: 10px;
+    align-items:flex-end;
+    flex-wrap: wrap;
+  }
+
+  .resumo__filter small{
+    display:block;
+    color:#94a3b8;
+    margin-bottom: 6px;
+    font-weight: 800;
+  }
+
+  .resumo__filters input[type="date"]{
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 900;
+    background: #fff;
+    color: #0f172a;
+    min-height: 44px;
+  }
+
+  #btnFiltrarResumo{
+    background: #38bdf8;
+    color: #0f172a;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 900;
+    cursor: pointer;
+    min-height: 44px;
+  }
+
+  .clean-grid--2{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+  }
+
+  .resumo__card{
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    border: 2px solid #0f172a;
+  }
+
+  .resumo__cardTitle{
+    text-transform: uppercase;
+    font-weight: 900;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 10px;
+  }
+  .resumo__cardTitle--cliente{ color: #1e40af; }
+  .resumo__cardTitle--material{ color: #9a3412; }
+
+  .table-scroll{
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .resumo-table{
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 520px;
+  }
+
+  .resumo-table th, .resumo-table td{
+    padding: 10px 10px;
+    border-bottom: 1px solid #f1f5f9;
+    text-align:left;
+    white-space: nowrap;
+    color: #0f172a;
+    font-size: 14px;
+  }
+
+  .resumo-table thead th{
+    color:#475569;
+    font-size: 0.8rem;
+    border-bottom: 2px solid #e2e8f0;
+    background: #fff;
+  }
+
+  .t-center{ text-align:center; }
+  .t-right{ text-align:right; }
+
+  .resumo__actions{
+    display:flex;
+    justify-content:flex-end;
+    margin-top: 18px;
+  }
+
+  .resumo__print{
+    background: #0f172a;
+    color: #fff;
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-weight: 900;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    display:flex;
+    align-items:center;
+    gap: 10px;
+    border: 0;
+  }
+
+  @media (max-width: 860px){
+    .clean-grid--2{
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    .resumo__toolbar{
+      padding: 16px;
+      align-items: stretch;
+    }
+    .resumo__filters{
+      width: 100%;
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .resumo__filters input[type="date"],
+    #btnFiltrarResumo{
+      width: 100%;
+    }
+    .resumo__card{
+      padding: 14px;
+    }
+    .resumo__actions{
+      justify-content: stretch;
+    }
+    .resumo__print{
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

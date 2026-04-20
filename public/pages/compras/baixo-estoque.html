@@ -1,0 +1,127 @@
+<div class="clean-form">
+  <div class="clean-form__body">
+    
+    <!-- HEADER DA ABA DE COMPRAS -->
+    <div class="clean-toolbar" style="border-bottom: 2px solid #fee2e2; padding-bottom: 15px;">
+      <div>
+        <h2 class="clean-title" style="color: #b91c1c;">⚠️ Itens para Compra Urgente</h2>
+        <div class="clean-help">Lista gerada automaticamente com base no estoque mínimo definido pelo almoxarifado.</div>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button class="clean-btn clean-btn--sm clean-btn--outline" onclick="window.print()">Imprimir Lista de Cotação</button>
+        <button class="clean-btn clean-btn--sm" style="background: #16a34a; color: white; border: none;">Enviar p/ Fornecedor</button>
+      </div>
+    </div>
+
+    <!-- RESUMO DE COMPRAS -->
+    <div class="clean-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0;">
+       <div style="background: #fef2f2; border: 1px solid #fecdd3; padding: 15px; border-radius: 8px;">
+          <span style="font-size: 0.85rem; color: #991b1b; font-weight: 700;">TOTAL DE ITENS ABAIXO DO MÍNIMO</span>
+          <div id="total_critico" style="font-size: 1.8rem; font-weight: 800; color: #b91c1c;">02</div>
+       </div>
+       <div style="background: #f0f9ff; border: 1px solid #bae6fd; padding: 15px; border-radius: 8px;">
+          <span style="font-size: 0.85rem; color: #0369a1; font-weight: 700;">VALOR ESTIMADO DE REPOSIÇÃO</span>
+          <div style="font-size: 1.8rem; font-weight: 800; color: #0c4a6e;">R$ ---</div>
+       </div>
+    </div>
+
+    <!-- TABELA DE NECESSIDADE DE COMPRA -->
+    <div class="clean-section">
+      <div class="clean-table-wrap" style="border-radius: 12px; border: 1px solid #fecdd3; overflow: hidden; background: white;">
+        <table class="clean-table">
+          <thead style="background: #fff1f2;">
+            <tr>
+              <th style="padding: 12px; color: #991b1b;">Item / Descrição</th>
+              <th style="padding: 12px; color: #991b1b;">Segmento</th>
+              <th style="padding: 12px; text-align: center; color: #991b1b;">Estoque Atual</th>
+              <th style="padding: 12px; text-align: center; color: #991b1b;">Mínimo Ideal</th>
+              <th style="padding: 12px; text-align: center; color: #991b1b;">Sugestão Compra</th>
+              <th style="padding: 12px; text-align: center; color: #991b1b;">Ação</th>
+            </tr>
+          </thead>
+          <tbody id="lista_compras_urgente">
+            <!-- ITEM EXEMPLO 1 -->
+            <tr style="border-bottom: 1px solid #fee2e2;">
+              <td style="padding: 12px;">
+                <div style="font-weight: 600;">Lâmpada LED 20W</div>
+                <div style="font-size: 0.75rem; color: #64748b;">Local: Corredor A / P-01</div>
+              </td>
+              <td style="padding: 12px; font-size: 0.85rem;">Insumos Elétricos</td>
+              <td style="padding: 12px; text-align: center; font-weight: 700; color: #e11d48;">02 un</td>
+              <td style="padding: 12px; text-align: center;">10 un</td>
+              <td style="padding: 12px; text-align: center;">
+                <input type="number" class="clean-input" value="8" style="width: 60px; text-align: center; padding: 4px;">
+              </td>
+              <td style="padding: 12px; text-align: center;">
+                <button class="clean-btn clean-btn--sm clean-btn--primary" style="font-size: 0.7rem;">Gerar Ordem</button>
+              </td>
+            </tr>
+
+            <!-- ITEM EXEMPLO 2 -->
+            <tr style="border-bottom: 1px solid #fee2e2;">
+              <td style="padding: 12px;">
+                <div style="font-weight: 600;">Luva de Proteção Nitrílica (M)</div>
+                <div style="font-size: 0.75rem; color: #64748b;">Local: Almoxarifado EPI</div>
+              </td>
+              <td style="padding: 12px; font-size: 0.85rem;">EPIs / Segurança</td>
+              <td style="padding: 12px; text-align: center; font-weight: 700; color: #e11d48;">05 pr</td>
+              <td style="padding: 12px; text-align: center;">20 pr</td>
+              <td style="padding: 12px; text-align: center;">
+                <input type="number" class="clean-input" value="15" style="width: 60px; text-align: center; padding: 4px;">
+              </td>
+              <td style="padding: 12px; text-align: center;">
+                <button class="clean-btn clean-btn--sm clean-btn--primary" style="font-size: 0.7rem;">Gerar Ordem</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  // Esta função "conecta" o HTML ao seu Banco de Dados
+  async function carregarItensFaltantes() {
+    const tbody = document.querySelector("#lista_compras_urgente");
+    const contador = document.getElementById("total_critico");
+
+    try {
+      // O '../' serve para sair da pasta 'compras' e achar a pasta 'api'
+      const res = await fetch('../api/estoque_baixo.php');
+      const dados = await res.json();
+
+      if (!dados.ok) {
+        console.error("Erro na API:", dados.error);
+        return;
+      }
+
+      // Atualiza o contador de itens críticos no topo
+      if(contador) contador.textContent = dados.items.length.toString().padStart(2, '0');
+
+      // Preenche a tabela com os itens que estão no "vermelho"
+      tbody.innerHTML = dados.items.map(it => `
+        <tr style="border-bottom: 1px solid #fee2e2;">
+          <td style="padding: 12px;">
+            <div style="font-weight: 600; color: #1e293b;">${it.descricao}</div>
+            <div style="font-size: 0.75rem; color: #64748b;">Ref: ${it.cod_barras || 'S/ cod'}</div>
+          </td>
+          <td style="padding: 12px; font-size: 0.85rem; color: #475569;">${it.segmento || '-'}</td>
+          <td style="padding: 12px; text-align: center; font-weight: 700; color: #e11d48;">${it.quantidade} un</td>
+          <td style="padding: 12px; text-align: center; color: #64748b;">${it.estoque_minimo} un</td>
+          <td style="padding: 12px; text-align: center;">
+            <input type="number" class="clean-input" value="${it.estoque_minimo - it.quantidade}" style="width: 60px; text-align: center; padding: 4px; border: 1px solid #fecdd3;">
+          </td>
+          <td style="padding: 12px; text-align: center;">
+            <button class="clean-btn clean-btn--sm clean-btn--primary" onclick="alert('Pedido de compra registrado!')">Comprar</button>
+          </td>
+        </tr>
+      `).join("");
+
+    } catch (err) {
+      console.error("Falha ao conectar com o servidor:", err);
+    }
+  }
+
+  // Chama a função assim que a página carrega
+  carregarItensFaltantes();
+</script>

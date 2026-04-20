@@ -1,0 +1,106 @@
+<div class="clean-form">
+  <div class="clean-form__body">
+    <div class="clean-toolbar">
+      <h2 class="clean-title">Laboratório · Análise Química & Densidade</h2>
+    </div>
+
+    <form id="fLabAnalise" method="POST" autocomplete="off">
+      <!-- IDENTIFICAÇÃO DA AMOSTRA -->
+      <div class="clean-section">
+        <div class="clean-section__title">Identificação da Amostra</div>
+        <hr class="clean-section__rule">
+        <div class="clean-grid">
+          <div class="clean-field c-col-4">
+            <div class="clean-label">Data da Produção *</div>
+            <input name="data_producao" id="data_producao" type="date" 
+                   class="clean-input" readonly style="background:#f1f5f9; cursor: not-allowed;">
+          </div>
+          
+          <div class="clean-field c-col-8">
+            <div class="clean-label">Descrição da Amostra *</div>
+            <input name="descricao" class="clean-input" required placeholder="Ex: TC4 REJEITO - AVG">
+          </div>
+        </div>
+      </div>
+
+      <!-- METODOLOGIA: DENSIDADE APARENTE -->
+      <div class="clean-section" style="margin-top:20px; border-left: 4px solid #f59e0b; padding-left:15px;">
+        <div class="clean-section__title" style="color: #b45309;">Metodologia: Densidade Aparente</div>
+        <hr class="clean-section__rule">
+        <div class="clean-grid">
+          <div class="clean-field c-col-4">
+            <div class="clean-label">Peso Seco (g)</div>
+            <input id="peso_seco" name="peso_seco" type="number" step="0.01" class="clean-input" oninput="calcularDensidade()">
+          </div>
+          <div class="clean-field c-col-4">
+            <div class="clean-label">Volume (cm³)</div>
+            <input id="volume" name="volume" type="number" step="0.01" class="clean-input" oninput="calcularDensidade()">
+          </div>
+          <div class="clean-field c-col-4">
+            <div class="clean-label">Densidade Final (g/cm³)</div>
+            <input id="densidade_res" name="densidade" class="clean-input" readonly style="background:#f8fafc; font-weight:bold;">
+          </div>
+        </div>
+      </div>
+
+      <!-- ANÁLISE QUÍMICA -->
+      <div class="clean-section" style="margin-top:20px; border-left: 4px solid #10b981; padding-left:15px;">
+        <div class="clean-section__title" style="color: #047857;">Resultados da Análise Química (%)</div>
+        <hr class="clean-section__rule">
+        <div class="clean-grid">
+          <div class="clean-field c-col-2"><div class="clean-label">Fe %</div><input name="fe_pct" class="clean-input"></div>
+          <div class="clean-field c-col-2"><div class="clean-label">SiO2 %</div><input name="sio2_pct" class="clean-input"></div>
+          <div class="clean-field c-col-2"><div class="clean-label">Al2O3 %</div><input name="al2o3_pct" class="clean-input"></div>
+          <div class="clean-field c-col-2"><div class="clean-label">FeT %</div><input name="fet_pct" class="clean-input"></div>
+          <div class="clean-field c-col-2"><div class="clean-label">Fe2O3 %</div><input name="fe2o3_pct" class="clean-input"></div>
+          <div class="clean-field c-col-2"><div class="clean-label">Mn %</div><input name="mn_pct" class="clean-input"></div>
+          <div class="clean-field c-col-2"><div class="clean-label">P %</div><input name="p_pct" class="clean-input"></div>
+          <div class="clean-field c-col-2"><div class="clean-label">PPC %</div><input name="ppc_pct" class="clean-input"></div>
+          <div class="clean-field c-col-8">
+            <div class="clean-label">Granulometria / Com-Alumina</div>
+            <input name="com_alumina" class="clean-input" placeholder="Ex: 12MM">
+          </div>
+        </div>
+      </div>
+
+      <!-- Campo oculto para data_salvamento -->
+      <input type="hidden" id="data_salvamento" name="data_salvamento">
+
+      <div class="clean-actions" style="margin-top:30px;">
+        <button class="clean-btn clean-btn--primary" type="submit" 
+                style="background: #0f172a; color: #ffffff; font-weight: bold; padding: 12px 25px;">
+          💾 Salvar Laudo Técnico
+        </button>
+        <span id="msgLab" style="margin-left:15px; font-weight: bold; font-size: 14px;"></span>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<script>
+  // Cálculo de Densidade
+  function calcularDensidade() {
+    const peso = parseFloat(document.getElementById('peso_seco').value) || 0;
+    const vol = parseFloat(document.getElementById('volume').value) || 0;
+    const res = document.getElementById('densidade_res');
+    if (peso > 0 && vol > 0) {
+      res.value = (peso / vol).toFixed(9);
+    } else {
+      res.value = "";
+    }
+  }
+
+  // Submit - Preenche apenas Data da Produção
+  const form = document.getElementById('fLabAnalise');
+  if (form) {
+    form.addEventListener('submit', function() {
+      const agora = new Date();
+      const dataProducao = document.getElementById('data_producao');
+      if (dataProducao) {
+        dataProducao.value = agora.toISOString().split('T')[0];
+      }
+      // data_salvamento será gerada no PHP
+    });
+  }
+</script>

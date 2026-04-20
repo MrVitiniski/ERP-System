@@ -1,0 +1,33 @@
+<section class="card">
+  <h2 style="margin-top:0;">SST · Treinamentos</h2>
+</section>
+
+<section class="card" style="margin-top:12px;">
+  <form id="f" class="form">
+    <div class="row">
+      <label>Treinamento<br><input name="treinamento" required></label>
+      <label>Instrutor<br><input name="instrutor" maxlength="120"></label>
+    </div>
+
+    <div class="row">
+      <label>Data<br><input name="data" type="date" required></label>
+      <label>Carga horária (h)<br><input name="carga" type="number" min="0" step="0.5" required></label>
+    </div>
+
+    <label>Participantes (matrículas separadas por vírgula)<br><input name="participantes" maxlength="220"></label>
+
+    <button class="btn btn-primary" type="submit">Salvar</button>
+    <span id="msg" style="margin-left:10px; opacity:.85;"></span>
+  </form>
+</section>
+
+<script>
+  const f = document.getElementById("f");
+  const msg = document.getElementById("msg");
+  f.addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    console.log("SST treinamentos (MVP)", Object.fromEntries(new FormData(f).entries()));
+    msg.textContent = "Salvo (MVP).";
+    f.reset();
+  });
+</script>

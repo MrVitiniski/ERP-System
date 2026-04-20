@@ -1,0 +1,127 @@
+<div class="clean-form" style="background: #f1f5f9; padding: 20px; min-height: 100vh;">
+  <div class="clean-form__body">
+    
+    <div class="clean-toolbar" style="background: #0f172a; padding: 20px; border-radius: 12px; color: #fff; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+      <div>
+        <h2 class="clean-title" style="color: #f8fafc; margin: 0;">⚙️ Gestão de Cotas por Contrato</h2>
+        <div class="clean-help" style="color: #94a3b8;">Cadastre e gerencie limites de tonelagem por período.</div>
+      </div>
+      <button onclick="window.location.hash = '#/bal-resumo'" style="background: #334155; color: #fff; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: bold;">⬅️ VOLTAR AO RESUMO</button>
+    </div>
+
+    <form id="formCota" style="background:#fff; padding:20px; border-radius:12px; border:2px solid #0f172a; margin-bottom:30px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:15px;">
+        <label>
+          <small style="font-weight: 800; color: #475569;">CLIENTE:</small>
+          <input type="text" name="cliente_nome" placeholder="Ex: AVG" required style="width:100%; padding:10px; border-radius:8px; border:1px solid #cbd5e1; margin-top:5px;">
+        </label>
+        
+        <label>
+          <small style="font-weight: 800; color: #475569;">LIMITE (KG):</small>
+          <input type="text" id="limite_ton_input" name="limite_ton" oninput="mascaraMilhar(this)" placeholder="0" required 
+                 style="width:100%; padding:10px; border-radius:8px; border:3px solid #10b981; margin-top:5px; font-weight: 900; font-size: 1.1rem; text-align: center;">
+        </label>
+
+        <label>
+          <small style="font-weight: 800; color: #475569;">DATA INÍCIO:</small>
+          <input type="date" id="data_inicio_form" name="data_inicio" required style="width:100%; padding:10px; border-radius:8px; border:1px solid #cbd5e1; margin-top:5px;">
+        </label>
+        <label>
+          <small style="font-weight: 800; color: #475569;">DATA FIM:</small>
+          <input type="date" id="data_fim_form" name="data_fim" required style="width:100%; padding:10px; border-radius:8px; border:1px solid #cbd5e1; margin-top:5px;">
+        </label>
+        <button type="submit" style="background:#10b981; color:#fff; border:none; padding:10px; border-radius:8px; font-weight:900; cursor:pointer; align-self:end; height: 42px; transition: 0.2s;">➕ SALVAR COTA</button>
+      </div>
+    </form>
+
+    <div style="background:#fff; padding:20px; border-radius:12px; border:2px solid #0f172a;">
+      <h3 style="margin-top:0; color: #1e293b; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px;">📋 Contratos e Cotas Ativas</h3>
+      <div style="overflow-x: auto;">
+        <table style="width:100%; border-collapse:collapse; min-width: 600px;">
+          <thead>
+            <tr style="text-align:left; border-bottom:2px solid #0f172a;">
+              <th style="padding:12px;">CLIENTE</th>
+              <th style="padding:12px;">LIMITE</th>
+              <th style="padding:12px;">PERÍODO</th>
+              <th style="padding:12px; text-align: center;">AÇÃO</th>
+            </tr>
+          </thead>
+          <tbody id="listaCotasCadastradas"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Máscara de milhar padrão Scavare
+  function mascaraMilhar(i) {
+    let v = i.value.replace(/\D/g, ""); 
+    v = v.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."); 
+    i.value = v;
+  }
+
+  // Lógica para Salvar com limpeza de pontos
+  document.getElementById('formCota').onsubmit = async (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    
+    // Criamos um novo FormData para limpar o ponto antes de enviar
+    const fd = new FormData(e.target);
+    const limiteFormatado = fd.get('limite_ton').replace(/\./g, "");
+    fd.set('limite_ton', limiteFormatado); // Envia como 50000 em vez de 50.000
+
+    try {
+        const res = await fetch('api/balanca_cota_salvar.php', { method: 'POST', body: fd });
+        const out = await res.json();
+        if(out.ok) { 
+            alert('Cota salva com sucesso!');
+            e.target.reset();
+            listarCotas();
+        } else {
+            alert('Erro: ' + (out.erro || 'Erro desconhecido'));
+        }
+    } catch(err) {
+        alert('Erro de conexão.');
+    } finally {
+        btn.disabled = false;
+    }
+  };
+
+  async function listarCotas() {
+    const tbody = document.getElementById('listaCotasCadastradas');
+    try {
+        const res = await fetch('api/balanca_get_cotas_config.php', { cache: "no-store" });
+        const dados = await res.json();
+        
+        if(!dados || dados.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:20px;">Nenhuma cota cadastrada.</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = dados.map(c => `
+          <tr style="border-bottom:1px solid #f1f5f9;">
+            <td style="padding:12px; font-weight:800; text-transform:uppercase;">${c.cliente_nome}</td>
+            <td style="padding:12px; font-weight:700; color:#1e40af;">
+                ${Number(c.limite_ton).toLocaleString('pt-BR')} t
+            </td>
+            <td style="padding:12px; font-size: 13px;">${fmtDataBr(c.data_inicio)} até ${fmtDataBr(c.data_fim)}</td>
+            <td style="padding:12px; text-align:center;">
+                <button onclick="excluirCota(${c.id})" style="color:#ef4444; border:1px solid #fee2e2; background:#fef2f2; padding:5px 10px; border-radius:5px; cursor:pointer;">🗑️ Excluir</button>
+            </td>
+          </tr>
+        `).join('');
+    } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:20px; color:red;">Erro ao carregar lista.</td></tr>';
+    }
+  }
+
+  function fmtDataBr(data) {
+    if(!data) return "";
+    const [y, m, d] = data.split("-");
+    return `${d}/${m}/${y}`;
+  }
+
+  listarCotas();
+</script>

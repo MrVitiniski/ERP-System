@@ -1,0 +1,139 @@
+<!-- Estrutura Principal -->
+<div class="sst-container-dark">
+  <section class="sst-hero-header">
+    <div class="sst-hero-header__content">
+      <h2 class="sst-hero-header__title">Ficha de EPI</h2>
+      <p class="sst-hero-header__sub">Histórico de EPIs entregues ao funcionário</p>
+    </div>
+  </section>
+
+  <section class="sst-main-section">
+    <div class="sst-ficha-header">
+      <div class="sst-ficha-info">
+        <h1 id="who" class="sst-funcionario-nome">Carregando...</h1>
+        <div id="meta" class="sst-funcionario-meta">—</div>
+      </div>
+      <div class="sst-ficha-actions">
+        <button id="btnVoltar" class="btn-voltar-pill" type="button">Voltar</button>
+      </div>
+    </div>
+
+    <div id="msg" class="sst-status-msg" aria-live="polite"></div>
+
+    <!-- O JavaScript injetará o card branco aqui -->
+    <div id="list"></div>
+  </section>
+</div>
+
+<style>
+  :root {
+    --bg-dark-page: #0f172a;    /* Fundo azul marinho profundo */
+    --bg-card-white: #ffffff;   /* Branco do card de dados */
+    --text-on-dark: #f8fafc;    /* Texto claro */
+    --text-muted: #94a3b8;      /* Texto cinza no dark */
+    --text-main-dark: #1e293b;  /* Texto escuro dentro do card */
+    --accent-blue: #2563eb;     /* Azul dos badges e botões */
+  }
+
+  .sst-container-dark {
+    background-color: var(--bg-dark-page);
+    min-height: 100vh;
+    color: var(--text-on-dark);
+    font-family: 'Inter', -apple-system, sans-serif;
+    padding: 20px;
+  }
+
+  /* Header Superior */
+  .sst-hero-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+  }
+  .sst-hero-header__title { margin: 0; font-size: 1.2rem; font-weight: 700; }
+  .sst-hero-header__sub { margin: 4px 0 0 0; font-size: 0.85rem; color: var(--text-muted); }
+
+  /* Info do Funcionário */
+  .sst-ficha-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 30px;
+  }
+  .sst-funcionario-nome { 
+    font-size: 1.8rem; 
+    font-weight: 900; 
+    margin: 0; 
+    color: #fff; 
+    letter-spacing: -0.5px;
+  }
+  .sst-funcionario-meta { 
+    font-size: 0.9rem; 
+    color: var(--text-muted); 
+    margin-top: 5px; 
+    font-weight: 600;
+  }
+
+  /* Botão Voltar Estilo Pílula */
+  .btn-voltar-pill {
+    background: #1e293b;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #fff;
+    padding: 10px 24px;
+    border-radius: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-voltar-pill:hover { background: #334155; }
+
+  /* Estilização do Card que o JS gera */
+  #list .epi-wrap { width: 100%; }
+  
+  #list .epi-panel {
+    background: var(--bg-card-white);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    color: var(--text-main-dark);
+  }
+
+  #list .epi-head {
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  #list .epi-title { font-size: 1rem; font-weight: 900; color: #0f172a; }
+  #list .epi-sub { font-size: 0.8rem; color: #64748b; font-weight: 600; }
+
+  #list .epi-badge {
+    background: #eff6ff;
+    color: var(--accent-blue);
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    border: 1px solid #dbeafe;
+  }
+
+  /* Tabela de Histórico */
+  .epi-table { width: 100%; border-collapse: collapse; }
+  .epi-table th {
+    background: #f8fafc;
+    color: #64748b;
+    text-align: left;
+    padding: 14px 24px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .epi-table td { padding: 16px 24px; font-size: 0.85rem; border-bottom: 1px solid #f1f5f9; }
+  
+  .epi-muted { color: #64748b; }
+  .epi-strong { font-weight: 700; color: #0f172a; }
+  .col-center { text-align: center; }
+
+  .sst-status-msg { margin-bottom: 15px; font-weight: 600; color: var(--accent-blue); }
+</style>

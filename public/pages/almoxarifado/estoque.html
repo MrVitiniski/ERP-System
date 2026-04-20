@@ -1,0 +1,106 @@
+<div class="clean-form">
+  <div class="clean-form__body">
+    
+    <!-- HEADER COM INDICADORES RÁPIDOS -->
+    <div class="clean-toolbar">
+      <div>
+        <h2 class="clean-title">Inventário de Estoque</h2>
+        <div class="clean-help">Visualize todos os itens, localizações e alertas de reposição.</div>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button class="clean-btn clean-btn--sm" onclick="exportarExcel()">Exportar Excel</button>
+        <button class="clean-btn clean-btn--sm clean-btn--primary" onclick="window.print()">Imprimir Relatório</button>
+      </div>
+    </div>
+
+    <!-- FILTROS DE BUSCA -->
+    <div class="clean-section" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 15px; margin-bottom: 20px;">
+      <div class="clean-grid" style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 15px;">
+        <div class="clean-field" style="grid-column: span 6;">
+          <div class="clean-label">Pesquisa Rápida</div>
+          <input type="text" id="filtroEstoque" class="clean-input" placeholder="Busque por item, código de barras ou setor...">
+        </div>
+        <div class="clean-field" style="grid-column: span 3;">
+          <div class="clean-label">Filtrar Segmento</div>
+          <select class="clean-input">
+            <option>Todos</option>
+            <option>Mecânica</option>
+            <option>EPIs</option>
+          </select>
+        </div>
+        <div class="clean-field" style="grid-column: span 3;">
+          <div class="clean-label">Status</div>
+          <select class="clean-input">
+            <option>Todos os Status</option>
+            <option>Estoque Ok</option>
+            <option>Estoque Crítico</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABELA DE ITENS COMPLETA -->
+    <div class="clean-section">
+      <div class="clean-table-wrap" style="border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; background: white;">
+        <table class="clean-table" id="tabelaEstoque">
+          <thead style="background: #f1f5f9;">
+            <tr>
+              <th style="padding: 12px; width: 150px;">Cód. Barras</th>
+              <th style="padding: 12px;">Descrição / NF</th>
+              <th style="padding: 12px;">Segmento/Setor</th>
+              <th style="padding: 12px; text-align: center;">Localização</th>
+              <th style="padding: 12px; text-align: center;">Qtd. Atual</th>
+              <th style="padding: 12px; text-align: center;">Min.</th>
+              <th style="padding: 12px; text-align: center;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- EXEMPLO DE ITEM COM ESTOQUE OK -->
+            <tr style="border-bottom: 1px solid #f1f5f9;">
+              <td style="padding: 12px; font-family: monospace; color: #6366f1;">78910203040</td>
+              <td style="padding: 12px;">
+                <div style="font-weight: 600; color: #1e293b;">Furadeira Impacto Bosch</div>
+                <div style="font-size: 0.75rem; color: #94a3b8;">NF: 45.982</div>
+              </td>
+              <td style="padding: 12px;">
+                <div style="font-size: 0.85rem;">Mecânica</div>
+                <div style="font-size: 0.75rem; color: #94a3b8;">Oficina Central</div>
+              </td>
+              <td style="padding: 12px; text-align: center;">
+                <span style="display: block; font-size: 0.85rem; font-weight: 500;">Corr. B / P-04</span>
+                <span style="font-size: 0.7rem; color: #94a3b8;">Nível 2</span>
+              </td>
+              <td style="padding: 12px; text-align: center; font-weight: 700; color: #1e293b;">15</td>
+              <td style="padding: 12px; text-align: center; color: #94a3b8;">05</td>
+              <td style="padding: 12px; text-align: center;">
+                <span style="background: #dcfce7; color: #166534; padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 700;">ESTOQUE OK</span>
+              </td>
+            </tr>
+
+            <!-- EXEMPLO DE ITEM COM ESTOQUE CRÍTICO -->
+            <tr style="border-bottom: 1px solid #f1f5f9; background: #fffafb;">
+              <td style="padding: 12px; font-family: monospace; color: #6366f1;">78955443322</td>
+              <td style="padding: 12px;">
+                <div style="font-weight: 600; color: #1e293b;">Lâmpada LED 20W</div>
+                <div style="font-size: 0.75rem; color: #94a3b8;">NF: 46.102</div>
+              </td>
+              <td style="padding: 12px;">
+                <div style="font-size: 0.85rem;">Insumos</div>
+                <div style="font-size: 0.75rem; color: #94a3b8;">Manutenção</div>
+              </td>
+              <td style="padding: 12px; text-align: center;">
+                <span style="display: block; font-size: 0.85rem; font-weight: 500;">Corr. A / P-01</span>
+                <span style="font-size: 0.7rem; color: #94a3b8;">Nível 1</span>
+              </td>
+              <td style="padding: 12px; text-align: center; font-weight: 700; color: #e11d48;">02</td>
+              <td style="padding: 12px; text-align: center; color: #94a3b8;">10</td>
+              <td style="padding: 12px; text-align: center;">
+                <span style="background: #fee2e2; color: #991b1b; padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 700;">REPOR URGENTE</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

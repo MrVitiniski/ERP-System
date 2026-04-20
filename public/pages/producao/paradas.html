@@ -1,0 +1,96 @@
+<div class="clean-form">
+  <div class="clean-form__body">
+
+    <!-- TÍTULO -->
+    <div class="clean-toolbar">
+      <h2 class="clean-title">⛔ Produção · Registro de Paradas</h2>
+    </div>
+
+    <!-- FORMULÁRIO -->
+    <div class="clean-section" style="background:#f8fafc; padding:20px; border-radius:8px; border:1px solid #e2e8f0;">
+      
+      <div class="clean-grid">
+
+        <div class="clean-field c-col-3">
+          <div class="clean-label">Data</div>
+          <input type="date" id="data_parada" class="clean-input">
+          <div class="erro" id="erro_data"></div>
+        </div>
+
+        <div class="clean-field c-col-3">
+          <div class="clean-label">Turno</div>
+          <select id="turno_parada" class="clean-input">
+            <option value="">Selecione</option>
+            <option>Turno 1 (07:00 - 15:20)</option>
+            <option>Turno 2 (15:20 - 23:20)</option>
+            <option>Turno 3 (23:00 - 07:00)</option>
+          </select>
+          <div class="erro" id="erro_turno"></div>
+        </div>
+
+        <div class="clean-field c-col-6">
+          <div class="clean-label">Setor / Equipamento</div>
+          <input type="text" id="linha_parada" class="clean-input" placeholder="Ex: Britagem / TC02">
+          <div class="erro" id="erro_linha"></div>
+        </div>
+
+      </div>
+
+      <div class="clean-grid" style="margin-top:15px;">
+
+        <div class="clean-field c-col-3">
+          <div class="clean-label">Hora Início</div>
+          <input type="time" id="inicio_parada" class="clean-input">
+          <div class="erro" id="erro_inicio"></div>
+        </div>
+
+        <div class="clean-field c-col-3">
+          <div class="clean-label">Hora Fim</div>
+          <input type="time" id="fim_parada" class="clean-input">
+          <div class="erro" id="erro_fim"></div>
+        </div>
+
+        <div class="clean-field c-col-6">
+          <div class="clean-label">Motivo da Parada</div>
+          <input type="text" id="motivo_parada" class="clean-input" placeholder="Descreva o motivo">
+          <div class="erro" id="erro_motivo"></div>
+        </div>
+
+      </div>
+
+      <div class="clean-actions" style="margin-top:20px;">
+        <button id="btnSalvarParada" class="clean-btn" disabled
+          style="background:#b91c1c; color:#fff; width:100%; padding:15px; font-weight:bold;">
+          💾 Registrar Parada
+        </button>
+      </div>
+
+    </div>
+
+    <!-- LISTA DE PARADAS -->
+    <div class="clean-section" style="margin-top:25px;">
+      <div class="clean-section__title">📋 Paradas Registradas</div>
+      <hr class="clean-section__rule">
+
+      <div class="clean-table-wrap">
+        <table class="clean-table">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Turno</th>
+              <th>Setor</th>
+              <th>Início</th>
+              <th>Fim</th>
+              <th>Tempo (min)</th>
+              <th>Motivo</th>
+            </tr>
+          </thead>
+          <tbody id="listaParadas"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="/sistema/public/pages/controllers/prod-paradas.js"></script>

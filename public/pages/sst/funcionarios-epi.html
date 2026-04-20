@@ -1,0 +1,135 @@
+<!-- Lista de funcionários para abrir a ficha -->
+<section class="card sst-hero">
+  <div class="sst-hero__head">
+    <div class="sst-hero__icon" aria-hidden="true">👷</div>
+    <div>
+      <h2 class="sst-hero__title">SST</h2>
+      <div class="sst-hero__sub">Funcionários · Ficha de EPI</div>
+    </div>
+  </div>
+</section>
+
+<section class="card sst-card sst-card--white" style="margin-top:12px;">
+  <div class="almox-toolbar">
+    <div class="almox-toolbar__left">
+      <input id="q" class="sst-input sst-input--white" placeholder="Buscar por nome..." style="max-width:380px;">
+      <button id="btnBuscar" class="btn sst-btn sst-btn--blue" type="button">Buscar</button>
+      <span id="count" class="almox-count"></span>
+    </div>
+    <div class="almox-toolbar__right">
+      <span id="msg" class="sst-msg sst-msg--dark" aria-live="polite"></span>
+    </div>
+  </div>
+
+  <div id="list" style="margin-top:12px;"></div>
+</section>
+
+<style>
+  /* Caso esses estilos já existam globalmente no seu projeto, pode remover este bloco. */
+  .sst-hero {
+    position: relative; overflow: hidden;
+    border: 1px solid rgba(255,255,255,.08);
+    background:
+      radial-gradient(800px 220px at 20% 0%, rgba(59,130,246,.22), transparent 60%),
+      radial-gradient(520px 220px at 85% 40%, rgba(16,185,129,.18), transparent 60%),
+      rgba(15, 23, 42, .65);
+  }
+  .sst-hero__head{ display:flex; gap:14px; align-items:center; }
+  .sst-hero__icon{
+    width:44px; height:44px; display:flex; align-items:center; justify-content:center;
+    border-radius:14px; background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.10);
+    box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    font-size: 22px;
+  }
+  .sst-hero__title{ margin:0; letter-spacing:.2px; }
+  .sst-hero__sub{ margin-top:2px; opacity:.82; font-size: 13px; }
+
+  .sst-card--white{
+    border: 1px solid rgba(15,23,42,.10);
+    background:#fff; color:#0f172a;
+    padding: 18px;
+  }
+
+  .sst-input--white{
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(15,23,42,.18);
+    outline: none;
+  }
+
+  .sst-btn{
+    border-radius: 14px;
+    padding: 10px 14px;
+    border: 1px solid rgba(37,99,235,.35);
+    cursor: pointer;
+  }
+  .sst-btn--blue{ background:#2563eb; color:#fff; }
+  .sst-btn--blue:hover{ background:#1d4ed8; }
+
+  .sst-msg--dark{ font-size: 13px; opacity:.9; color: rgba(15,23,42,.78); }
+
+  .almox-toolbar{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:12px; padding: 4px 2px 10px 2px;
+    border-bottom: 1px solid rgba(15,23,42,.08);
+  }
+  .almox-toolbar__left{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .almox-count{
+    font-size: 12px; font-weight: 800;
+    color: rgba(15,23,42,.60);
+    background: rgba(15,23,42,.04);
+    border: 1px solid rgba(15,23,42,.08);
+    padding: 6px 10px; border-radius: 999px;
+  }
+
+  .tbl{
+    width:100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow:hidden;
+    border:1px solid rgba(15,23,42,.10);
+    border-radius: 14px;
+    background: #fff;
+  }
+  .tbl th, .tbl td{
+    padding: 10px 12px;
+    text-align:left;
+    border-bottom:1px solid rgba(15,23,42,.08);
+    font-size: 13px;
+    vertical-align: top;
+    white-space: nowrap;
+  }
+  .tbl td.col-wide, .tbl th.col-wide{ white-space: normal; min-width: 240px; }
+  .tbl th{ background: rgba(15,23,42,.04); font-weight: 900; color: rgba(15,23,42,.75); }
+  .tbl tr:last-child td{ border-bottom: 0; }
+
+  .pill{
+    display:inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 900;
+    background: rgba(37,99,235,.10);
+    color: #1d4ed8;
+    border:1px solid rgba(37,99,235,.18);
+  }
+
+  .btn-mini{
+    padding: 9px 12px;
+    border-radius: 12px;
+    border:1px solid rgba(37,99,235,.30);
+    background: rgba(37,99,235,.10);
+    color: #1d4ed8;
+    font-weight: 900;
+    cursor:pointer;
+  }
+  .btn-mini:hover{ background: rgba(37,99,235,.16); }
+
+  .empty{ padding: 14px 4px; opacity:.75; font-size: 13px; }
+
+  @media (max-width: 980px){
+    .tbl{ display:block; overflow:auto; }
+    .almox-toolbar{ flex-direction: column; align-items: flex-start; }
+  }
+</style>

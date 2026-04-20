@@ -1,0 +1,68 @@
+<div class="clean-form">
+  <div class="clean-form__body">
+    <h2>Nova Ordem de Compra</h2>
+
+    <form id="frmCompra" autocomplete="off">
+      <input type="hidden" id="solicitacao_id" name="id" value="">
+
+      <div class="clean-section">
+        <div class="clean-section__title">Dados da Solicitação</div>
+        <hr class="clean-section__rule""")/>
+
+        <div class="clean-grid">
+          <div class="clean-field c-col-12">
+            <div class="clean-label">Setor/Requerente *</div>
+            <input class="clean-input" name="nome_requerente" required />
+          </div>
+
+          <div class="clean-field c-col-6">
+            <div class="clean-label">Data da Solicitação *</div>
+            <input class="clean-input" name="data_pedido" type="date" required />
+          </div>
+
+          <div class="clean-field c-col-6">
+            <div class="clean-label">Nome do Solicitante *</div>
+            <!-- Corrigido para solicitante_nome -->
+            <input class="clean-input" name="solicitante_nome" placeholder="Ex: João" required />
+          </div>
+
+          <div class="clean-field c-col-6">
+            <div class="clean-label">Item Solicitado</div>
+            <!-- Corrigido para item_solicitado -->
+            <input class="clean-input" name="item_solicitado" placeholder="Ex: Lâmpada" />
+          </div>
+
+          <div class="clean-field c-col-6">
+            <div class="clean-label">Descrição</div>
+            <input class="clean-input" name="descricao_item" placeholder="Ex: Lâmpada 12v" />
+          </div>
+
+          <div class="clean-field c-col-6">
+            <div class="clean-label">Fornecedor</div>
+            <input class="clean-input" name="fornecedor" placeholder="Ex: Engepeças" />
+          </div>
+
+          <div class="clean-field c-col-6">
+            <div class="clean-label">Valor / Condições</div>
+            <input class="clean-input" name="condicoes_pagamento" />
+          </div>
+
+          <div class="clean-field c-col-6">
+            <div class="clean-label">Número da Ordem</div>
+            <input class="clean-input" id="numero_interno" readonly placeholder="Gerado ao salvar" />
+          </div>
+        </div>
+      </div>
+
+      <div class="clean-actions">
+        <button id="btnSalvar" class="clean-btn clean-btn--primary" type="submit">Salvar</button>
+        <button id="btnImprimir" class="clean-btn" type="button" disabled>Imprimir</button>
+      </div>
+
+      <div id="msg" class="clean-alert" style="display:none; margin-top: 15px;"></div>
+    </form>
+  </div>
+</div>
+
+<!-- Controller do Cadastro -->
+<script src="/sistema/public/pages/controllers/compras-solicitacao.js"></script>

@@ -1,0 +1,117 @@
+<div class="clean-form">
+  <div class="clean-form__body">
+    <div class="clean-toolbar">
+      <div>
+        <h2 class="clean-title">Solicitações de Compra</h2>
+        <div class="clean-help">Pesquise por número, requerente, item ou fornecedor.</div>
+      </div>
+
+      <div style="display:flex; gap:8px;">
+        <button id="btnReload" class="clean-btn clean-btn--sm" type="button">Recarregar</button>
+        <a class="clean-btn clean-btn--sm clean-btn--primary" href="#/compras-solicitacao">Nova Solicitação</a>
+      </div>
+    </div>
+
+    <div class="clean-section">
+      <div class="clean-section__title">Buscar</div>
+      <hr class="clean-section__rule"/>
+
+      <div class="clean-grid">
+        <div class="clean-field c-col-12">
+          <div class="clean-label">Digite para filtrar</div>
+          
+          <input id="q" class="clean-input" placeholder="Ex: 2024/001, Severino, Lâmpada, Engepeças..." />
+        </div>
+      </div>
+
+      <div id="msg" class="clean-alert" style="display:none;"></div>
+    </div>
+
+    <div class="clean-section">
+      <div class="clean-section__title">Lista de Ordens</div>
+      <hr class="clean-section__rule"/>
+
+      <div class="clean-table-wrap">
+        <table class="clean-table" id="tbl">
+          <thead>
+            <tr>
+              <th>Nº Ordem</th>
+              <th>Data</th>
+              <th>Requerente</th>
+              <th>Solicitante</th>
+              <th>Item</th>
+              <th>Fornecedor</th>
+              <th style="text-align:center;">Ações</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  
+  const BASE = "/sistema/public";
+  const msg = document.getElementById("msg");
+  const tbody = document.querySelector("#tbl tbody");
+  const q = document.getElementById("q");
+
+  function render(items) {
+    const term = (q.value || "").trim().toLowerCase();
+    const filtered = !term ? items : items.filter(it => {
+      
+      const hay = [
+        it.numero_interno, it.nome_requerente, it.solicitante_nome, it.item_solicitado, it.fornecedor
+      ].join(" ").toLowerCase();
+      return hay.includes(term);
+    });
+
+    tbody.innerHTML = filtered.map(it => `
+      <tr>
+        <td><b>${it.numero_interno || it.id}</b></td>
+        <td>${it.data_pedido || ""}</td>
+        <td>${it.nome_requerente || ""}</td>
+        <td>${it.solicitante_nome || ""}</td>
+        <td>${it.item_solicitado || ""}</td>
+        <td>${it.fornecedor || ""}</td>
+        <td style="text-align:center;">
+          <button class="clean-btn clean-btn--sm" onclick="window.open('${BASE}/api/compras_solicitacao_print.php?id=${it.id}', '_blank')">
+            Imprimir
+          </button>
+        </td>
+      </tr>
+    `).join("");
+
+    msg.style.display = "block";
+    msg.textContent = `Total: ${filtered.length} registros`;
+  }
+
+  async function load() {
+    msg.style.display = "block";
+    msg.textContent = "Carregando...";
+    tbody.innerHTML = "";
+
+    
+    const res = await fetch(`${BASE}/api/compras_list.php`, {
+      cache: "no-store",
+      credentials: "same-origin"
+    });
+
+    const out = await res.json().catch(() => ({}));
+    if (!res.ok || !out.ok) {
+      msg.textContent = "Erro ao carregar lista: " + (out.error || res.status);
+      return;
+    }
+
+   
+    window.__COMPRAS_ITEMS__ = out.items || [];
+    render(window.__COMPRAS_ITEMS__);
+  }
+
+  document.getElementById("btnReload").addEventListener("click", load);
+  q.addEventListener("input", () => render(window.__COMPRAS_ITEMS__ || []));
+
+  load();
+</script>

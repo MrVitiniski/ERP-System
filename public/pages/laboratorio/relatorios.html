@@ -1,0 +1,54 @@
+<div class="clean-section" style="margin-top:20px;">
+    <div class="clean-section__title" style="color: #1e293b;">📊 Relatório Mensal de Qualidade</div>
+    <hr class="clean-section__rule">
+    
+    <!-- Filtros de Data -->
+    <div class="clean-grid" style="background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; align-items: flex-end; display: flex; gap: 15px; margin-bottom: 25px;">
+        <div class="clean-field" style="flex: 1;">
+            <div class="clean-label">Data Início</div>
+            <input type="date" id="rel_data_inicio" class="clean-input">
+        </div>
+        <div class="clean-field" style="flex: 1;">
+            <div class="clean-label">Data Fim</div>
+            <input type="date" id="rel_data_fim" class="clean-input">
+        </div>
+        <div style="flex: 1;">
+            <button type="button" id="btnGerarRelatorio" class="clean-btn" style="width: 100%; background: #0f172a; color: #ffffff; font-weight: bold; height: 42px; border: none; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                🔍 Gerar Relatório
+            </button>
+        </div>
+    </div>
+
+    <!-- Dashboard de Gráficos -->
+    <div id="dashboardRelatorio" style="display: none;">
+        <div class="clean-grid">
+            <!-- Card Gráfico Químico -->
+            <div class="c-col-8" style="background: white; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                <div style="font-weight: bold; color: #047857; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
+                    📈 Tendência Mensal: Teor de Fe (%)
+                </div>
+                <div style="height: 300px; position: relative;">
+                    <canvas id="chartQuimico"></canvas>
+                </div>
+            </div>
+
+            <!-- Card Gráfico Densidade -->
+            <div class="c-col-4" style="background: white; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                <div style="font-weight: bold; color: #b45309; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
+                    ⚖️ Densidade Média
+                </div>
+                <div style="height: 300px; position: relative;">
+                    <canvas id="chartDensidade"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="msgVazioRelatorio" style="text-align: center; padding: 60px; color: #94a3b8; background: #f8fafc; border: 2px dashed #e2e8f0; border-radius: 8px;">
+        <p style="font-size: 16px; margin: 0;">Selecione um período e clique em <b>Gerar Relatório</b> para visualizar os indicadores.</p>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net"></script>
+<script src="/sistema/public/pages/controllers/lab-historico.js"></script>

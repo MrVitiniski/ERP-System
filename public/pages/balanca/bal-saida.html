@@ -1,0 +1,154 @@
+<div class="clean-form" style="background: #f1f5f9; padding: 20px;">
+  <div class="clean-form__body">
+    
+    <div class="clean-toolbar" style="background: #0f172a; padding: 20px; border-radius: 12px 12px 0 0; color: #fff;">
+      <h2 class="clean-title" style="color: #f8fafc; margin: 0;">Balança Scavare - 2ª Pesagem (Saída)</h2>
+      <div class="clean-help" style="color: #94a3b8;">Localize a pesagem em aberto para realizar o fechamento.</div>
+    </div>
+
+    <form id="fSaidaBalanca" class="clean-section" style="background: #fff; border-radius: 0 0 12px 12px; padding: 30px; border: 2px solid #0f172a; border-top: none;">
+  
+      <div class="clean-grid" style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px;">
+        
+        <div style="grid-column: span 12;">
+           <div class="clean-section__title" style="color: #1e40af; font-weight: 800; text-transform: uppercase;">1. Localizar Pesagem em Aberto</div>
+           <hr style="border-top: 2px solid #e2e8f0; margin: 10px 0;">
+        </div>
+
+        <div class="clean-field" style="grid-column: span 6;">
+          <div class="clean-label" style="font-weight: 800; color: #0f172a;">Número do Ticket</div>
+          <input type="text" id="id_pesagem_busca" class="clean-input" placeholder="Ex: 1050" style="border: 2px solid #1e40af; font-weight: 900; font-size: 1.2rem; background: #eff6ff;">
+          <input type="hidden" id="id_pesagem" name="id_pesagem">
+        </div>
+
+        <div class="clean-field" style="grid-column: span 6;">
+          <div class="clean-label" style="font-weight: 800; color: #0f172a;">Placa do Veículo (Busca Auxiliar)</div>
+          <input type="text" id="placa_saida" class="clean-input" placeholder="AAA0A00" style="border: 2px solid #475569; text-transform: uppercase; font-weight: 700;">
+        </div>
+
+        <div id="dados_veiculo" style="grid-column: span 12; display:none; background: #f8fafc; padding: 25px; border-radius: 12px; border: 3px solid #0f172a; margin: 10px 0;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; color: #0f172a;">
+                <div><small style="font-weight: 800; color: #475569;">👤 MOTORISTA:</small><br><b id="txt_motorista" style="font-size: 1.2rem;">---</b></div>
+                <div><small style="font-weight: 800; color: #475569;">🚚 TRANSPORTADORA:</small><br><b id="txt_transp" style="font-size: 1.2rem;">---</b></div>
+                <div><small style="font-weight: 800; color: #475569;">📄 NF / MATERIAL:</small><br><b id="txt_material" style="font-size: 1.2rem; color: #1e40af;">---</b></div>
+                
+                <div style="grid-column: span 3; border-top: 2px solid #cbd5e1; padding-top: 15px; margin-top: 10px; display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color:#9a3412; font-size: 1.4rem; font-weight: 900;">⚖️ PESO ENTRADA: <strong id="txt_peso_ent">0</strong> KG</span>
+                </div>
+
+                <div id="alertaCota" style="grid-column: span 3; display: none; margin-top: 10px; padding: 15px; border-radius: 10px; border: 2px solid #cbd5e1; background: #fff;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span style="font-weight: 800; color: #1e293b; font-size: 0.8rem;">SALDO DA COTA DO CLIENTE (HOJE)</span>
+                        <span id="textoSaldo" style="font-weight: 900; color: #1e40af; font-size: 1.1rem;">0t / 0t</span>
+                    </div>
+                    <div style="width: 100%; background: #e2e8f0; height: 16px; border-radius: 8px; overflow: hidden; border: 1px solid #cbd5e1;">
+                        <div id="barraProgresso" style="width: 0%; height: 100%; background: #22c55e; transition: width 0.8s ease-in-out;"></div>
+                    </div>
+                    <div id="avisoCritico" style="display:none; color: #ef4444; font-size: 0.85rem; font-weight: 900; margin-top: 8px; text-align: center; background: #fee2e2; padding: 5px; border-radius: 5px;">
+                        ⚠️ ATENÇÃO: LIMITE DE COTA EXCEDIDO!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="grid-column: span 12; margin-top: 20px;">
+           <div class="clean-section__title" style="color: #1e40af; font-weight: 800; text-transform: uppercase;">2. Pesagem de Saída e Fechamento</div>
+           <hr style="border-top: 2px solid #e2e8f0; margin: 10px 0;">
+        </div>
+
+        <div class="clean-field" style="grid-column: span 4;">
+          <div class="clean-label" style="font-weight: 800; color: #0f172a;">Peso de Saída (kg)</div>
+          <input type="text" id="peso_saida" name="peso_saida" class="clean-input" required 
+                 oninput="mascaraKG(this); calcularLiquido();" placeholder="0"
+                 style="border: 3px solid #059669; background: #f0fdf4; font-weight: 900; font-size: 1.5rem; text-align: center;">
+        </div>
+
+        <div class="clean-field" style="grid-column: span 4;">
+          <div class="clean-label" style="font-weight: 800; color: #0f172a;">Peso Líquido (Carga)</div>
+          <div id="txt_peso_liquido" style="background: #e2e8f0; padding: 12px; border-radius: 8px; font-size: 1.5rem; font-weight: 900; text-align: center; color: #1e40af;">0 KG</div>
+        </div>
+
+        <div style="grid-column: span 4; margin-top: 25px;">
+          <button type="submit" class="clean-btn" 
+            style="background: #1eaf2c; color: white; border: none; padding: 0 40px; height: 55px; line-height: 55px; display: inline-flex; align-items: center; justify-content: center; border-radius: 10px; font-size: 1.1rem; font-weight: 900; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 10px rgba(30, 64, 175, 0.3); gap: 10px;">
+            🏁 FINALIZAR PESAGEM
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+// Função de máscara de milhar (Padrão Scavare)
+function mascaraKG(i) {
+    let v = i.value.replace(/\D/g, ""); 
+    v = v.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."); 
+    i.value = v;
+}
+
+// Calcula o líquido dinamicamente na tela removendo os pontos para a conta
+function calcularLiquido() {
+    const entStr = document.getElementById('txt_peso_ent').textContent.replace(/\./g, "");
+    const saiStr = document.getElementById('peso_saida').value.replace(/\./g, "");
+    
+    const ent = parseFloat(entStr) || 0;
+    const sai = parseFloat(saiStr) || 0;
+    
+    const liq = Math.abs(sai - ent);
+    
+    // Formata o resultado do líquido com ponto de milhar também
+    document.getElementById('txt_peso_liquido').textContent = liq.toLocaleString('pt-BR') + " KG";
+}
+
+// Mantive sua lógica de Cota e Observer abaixo...
+function checarCotaEmpresa(nomeEmpresa) {
+    if (!nomeEmpresa || nomeEmpresa === '---') return;
+    fetch(`api/balanca_checar_cota.php?empresa=${encodeURIComponent(nomeEmpresa)}`)
+    .then(res => res.json())
+    .then(data => {
+        const painel = document.getElementById('alertaCota');
+        if (data.tem_cota) {
+            painel.style.display = 'block';
+            const total = parseFloat(data.dados.toneladas_total);
+            const saldo = parseFloat(data.dados.toneladas_saldo);
+            const usado = total - saldo;
+            let perc = (usado / total) * 100;
+            if (perc < 0) perc = 0;
+            document.getElementById('textoSaldo').textContent = `${saldo.toFixed(2)}t / ${total.toFixed(2)}t`;
+            const barra = document.getElementById('barraProgresso');
+            barra.style.width = (perc > 100 ? 100 : perc) + "%";
+            if (saldo <= 0) {
+                barra.style.background = "#000";
+                document.getElementById('avisoCritico').style.display = 'block';
+            } else if (perc >= 85) {
+                barra.style.background = "#ef4444";
+            } else if (perc >= 60) {
+                barra.style.background = "#f59e0b";
+            } else {
+                barra.style.background = "#22c55e";
+            }
+        } else {
+            painel.style.display = 'none';
+        }
+    }).catch(err => console.error("Erro ao buscar cota:", err));
+}
+
+const observer = new MutationObserver(() => {
+    const empresa = document.getElementById('txt_transp').textContent;
+    if (empresa !== '---') {
+        checarCotaEmpresa(empresa);
+    }
+    // Formata o peso de entrada que vem do banco para exibir com ponto assim que carregar
+    const entEl = document.getElementById('txt_peso_ent');
+    if(entEl.textContent.indexOf('.') === -1) {
+        const val = parseFloat(entEl.textContent) || 0;
+        entEl.textContent = val.toLocaleString('pt-BR');
+    }
+});
+
+const target = document.getElementById('txt_transp');
+if (target) {
+    observer.observe(target, { childList: true, characterData: true, subtree: true });
+}
+</script>

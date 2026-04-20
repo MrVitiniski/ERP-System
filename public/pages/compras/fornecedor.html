@@ -1,0 +1,95 @@
+<div class="clean-form">
+  <div class="clean-form__body">
+    <h2>Cadastro de Fornecedores</h2>
+
+    <form id="frmCompra" autocomplete="off">
+
+      <div class="clean-section">
+        <div class="clean-section__title">Dados do Fornecedor</div>
+        <hr class="clean-section__rule">
+
+        <div class="clean-grid">
+
+          <div class="clean-field c-col-12">
+            <div class="clean-label">Razão Social *</div>
+            <input class="clean-input" name="razao" required placeholder="Nome da empresa">
+          </div>
+
+          <div class="clean-field c-col-6">
+            <div class="clean-label">CNPJ *</div>
+            <input class="clean-input" name="cnpj" placeholder="00.000.000/0000-00" required>
+          </div>
+
+          <div class="clean-field c-col-6">
+            <div class="clean-label">Telefone</div>
+            <input class="clean-input" name="telefone" placeholder="(00) 00000-0000">
+          </div>
+
+          <div class="clean-field c-col-6">
+            <div class="clean-label">Contato / Vendedor</div>
+            <input class="clean-input" name="contato" placeholder="Nome do contato">
+          </div>
+
+          <div class="clean-field c-col-6">
+            <div class="clean-label">E-mail</div>
+            <input class="clean-input" type="email" name="email" placeholder="empresa@email.com">
+          </div>
+
+          <div class="clean-field c-col-12">
+            <div class="clean-label">Cidade / UF</div>
+            <input class="clean-input" name="cidade_uf" placeholder="Ex: Belo Horizonte / MG">
+          </div>
+
+        </div>
+      </div>
+
+      <div class="clean-actions">
+        <button id="btnSalvar" class="clean-btn clean-btn--primary" type="submit">
+          Salvar Fornecedor
+        </button>
+      </div>
+
+      <div id="msg" class="clean-alert" style="margin-top:15px;"></div>
+
+    </form>
+
+    <!-- LISTAGEM -->
+
+    <div class="clean-section" style="margin-top:40px;">
+      <div class="clean-section__title">Fornecedores Cadastrados</div>
+      <hr class="clean-section__rule">
+
+      <div class="clean-grid" style="margin-bottom:15px;">
+        <div class="clean-field c-col-12">
+          <div class="clean-label">Pesquisar fornecedor</div>
+          <input id="q" class="clean-input" placeholder="Digite nome, CNPJ ou cidade">
+        </div>
+      </div>
+
+      <div class="clean-table-wrap">
+
+        <table class="clean-table">
+
+          <thead>
+            <tr>
+              <th>Razão Social</th>
+              <th>CNPJ</th>
+              <th>Contato</th>
+              <th>Telefone</th>
+              <th>Cidade / UF</th>
+              <th style="text-align:center;">Ações</th>
+            </tr>
+          </thead>
+
+          <tbody id="tbody">
+          </tbody>
+
+        </table>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="/sistema/public/pages/controllers/compras-fornecedor.js"></script>

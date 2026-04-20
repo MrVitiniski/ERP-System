@@ -1,0 +1,121 @@
+<div class="clean-form" style="background: #f1f5f9; padding: 20px;">
+  <div class="clean-form__body">
+    
+    <div class="clean-toolbar" style="background: #0f172a; padding: 20px; border-radius: 12px 12px 0 0; color: #fff; display: flex; justify-content: space-between; align-items: center;">
+      <div>
+        <h2 class="clean-title" style="color: #f8fafc; margin: 0; font-size: 1.5rem;">Balança Scavare - 1ª Pesagem</h2>
+        <div class="clean-help" style="color: #94a3b8; font-weight: 500;">Preencha todos os campos obrigatórios para gerar o ticket de entrada.</div>
+      </div>
+      
+      <div style="display:flex; gap:15px; align-items: center;">
+        <div style="background: #1e293b; padding: 10px 20px; border-radius: 10px; border: 2px solid #38bdf8; box-shadow: 0 0 15px rgba(56, 189, 248, 0.2); text-align: center;">
+          <span style="color: #38bdf8; font-size: 0.7rem; display: block; text-transform: uppercase; font-weight: 800; letter-spacing: 1px;">Ticket Atual</span>
+          <span id="num_ticket_gerado" style="font-size: 1.6rem; color: #fff; font-weight: 900; font-family: monospace;">---</span>
+        </div>
+        <button type="button" class="clean-btn" style="background: #ef4444; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s;" onclick="location.reload()">NOVA PESAGEM</button>
+      </div>
+    </div>
+
+    <form id="fEntradaBalanca" class="clean-section" style="background: #ffffff; border-radius: 0 0 12px 12px; padding: 30px; border: 2px solid #0f172a; border-top: none; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);">
+  
+      <div class="clean-grid" style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 25px;">
+        
+        <div style="grid-column: span 12;">
+           <div class="clean-section__title" style="color: #1e40af; font-size: 1.1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px;">1. Identificação do Veículo e Empresa</div>
+           <hr style="border: 0; border-top: 2px solid #0f172a; margin: 10px 0; opacity: 0.2;">
+        </div>
+
+        <div class="clean-field" style="grid-column: span 3;">
+          <div class="clean-label" style="color: #0f172a; font-weight: 800; margin-bottom: 8px;">Placa Cavalo</div>
+          <input type="text" id="placa_cavalo" name="placa_cavalo" class="clean-input" placeholder="AAA0A00" required 
+                 style="border: 2px solid #0f172a; background: #f8fafc; color: #1e40af; font-weight: 900; font-size: 1.2rem; text-transform: uppercase; padding: 12px;">
+        </div>
+
+        <div class="clean-field" style="grid-column: span 3;">
+          <div class="clean-label" style="color: #0f172a; font-weight: 800; margin-bottom: 8px;">Placa Carreta</div>
+          <input type="text" id="placa_carreta" name="placa_carreta" class="clean-input" placeholder="BBB0B00" required 
+                 style="border: 2px solid #475569; background: #fff; color: #0f172a; font-weight: 700; text-transform: uppercase; padding: 12px;">
+        </div>
+
+        <div class="clean-field" style="grid-column: span 6;">
+          <div class="clean-label" style="color: #0f172a; font-weight: 800; margin-bottom: 8px;">Transportadora / Empresa</div>
+          <input type="text" id="transportadora" name="transportadora" class="clean-input" placeholder="Razão Social" required 
+                 style="border: 2px solid #475569; background: #fff; color: #0f172a; font-weight: 700; padding: 12px;">
+        </div>
+
+        <div style="grid-column: span 12; margin-top: 10px;">
+           <div class="clean-section__title" style="color: #1e40af; font-size: 1.1rem; font-weight: 900; text-transform: uppercase;">2. Dados do Motorista</div>
+           <hr style="border: 0; border-top: 2px solid #0f172a; margin: 10px 0; opacity: 0.2;">
+        </div>
+
+        <div class="clean-field" style="grid-column: span 8;">
+          <div class="clean-label" style="color: #0f172a; font-weight: 800; margin-bottom: 8px;">Nome Completo</div>
+          <input type="text" id="motorista_nome" name="motorista_nome" class="clean-input" placeholder="Nome do motorista" required 
+                 style="border: 2px solid #475569; background: #fff; color: #0f172a; font-weight: 700; padding: 12px;">
+        </div>
+
+        <div class="clean-field" style="grid-column: span 4;">
+          <div class="clean-label" style="color: #0f172a; font-weight: 800; margin-bottom: 8px;">CPF / RG</div>
+          <input type="text" id="motorista_doc" name="motorista_doc" class="clean-input" placeholder="Documento" required 
+                 style="border: 2px solid #475569; background: #fff; color: #0f172a; font-weight: 700; padding: 12px;">
+        </div>
+
+        <div style="grid-column: span 12; margin-top: 10px;">
+           <div class="clean-section__title" style="color: #1e40af; font-size: 1.1rem; font-weight: 900; text-transform: uppercase;">3. Informações da Carga e Peso</div>
+           <hr style="border: 0; border-top: 2px solid #0f172a; margin: 10px 0; opacity: 0.2;">
+        </div>
+
+        <div class="clean-field" style="grid-column: span 4;">
+          <div class="clean-label" style="color: #0f172a; font-weight: 800; margin-bottom: 8px;">Tipo de Operação</div>
+          <select id="tipo_operacao" name="tipo_operacao" class="clean-input" required 
+                  style="border: 2px solid #0f172a; background: #f8fafc; color: #1e40af; font-weight: 900; font-size: 1.1rem; padding: 12px; width: 100%; cursor: pointer;">
+            <option value="">Selecione...</option>
+            <option value="CARREGAMENTO">📥 CARREGAMENTO</option>
+            <option value="DESCARREGAMENTO">📤 DESCARREGAMENTO</option>
+          </select>
+        </div>
+
+        <div class="clean-field" style="grid-column: span 12; margin-top: 10px;">
+          <div class="clean-label" style="color: #0f172a; font-weight: 800; margin-bottom: 8px;">Cliente / Destino Final</div>
+          <input type="text" id="cliente_nome" name="cliente_nome" class="clean-input" required 
+                 placeholder="Nome do Cliente ou Usina de Destino" 
+                 style="border: 2px solid #475569; background: #fff; color: #1e293b; font-weight: 600; padding: 12px; width: 100%;">
+        </div>
+
+        <div class="clean-field" style="grid-column: span 4;">
+          <div class="clean-label" style="color: #0f172a; font-weight: 800; margin-bottom: 8px;">Material</div>
+          <input type="text" id="material_tipo" name="material_tipo" class="clean-input" placeholder="Ex: SINTER FINO, SINTER GROSSO..." required 
+                 style="border: 2px solid #475569; background: #fff; color: #0f172a; font-weight: 700; padding: 12px;">
+        </div>
+
+        <div class="clean-field" style="grid-column: span 4;">
+          <div class="clean-label" style="color: #4338ca; font-weight: 900; margin-bottom: 8px;">Número da Nota Fiscal (NF)</div>
+          <input type="text" id="nf_numero" name="nf_numero" class="clean-input" placeholder="NF-e" required 
+                 style="border: 2px solid #4338ca; background: #eef2ff; color: #4338ca; font-weight: 900; font-size: 1.2rem; padding: 12px;">
+        </div>
+
+        <div class="clean-field" style="grid-column: span 4;">
+          <div class="clean-label" style="color: #9a3412; font-weight: 900; margin-bottom: 8px;">Peso de Entrada (kg)</div>
+          <input type="text" id="peso_entrada" name="peso_entrada" class="clean-input" required 
+                 oninput="mascaraKG(this)" placeholder="0"
+                 style="border: 3px solid #9a3412; background: #fff7ed; color: #9a3412; font-weight: 900; font-size: 1.6rem; padding: 12px; text-align: center;">
+        </div>
+
+        <div style="grid-column: span 12; text-align: right; margin-top: 30px; border-top: 2px solid #f1f5f9; padding-top: 20px;">
+          <button type="submit" class="clean-btn" 
+                style="background: #1e40af; color: white; border: none; padding: 0 40px; height: 55px; line-height: 55px; display: inline-flex; align-items: center; justify-content: center; border-radius: 10px; font-size: 1.1rem; font-weight: 900; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 10px rgba(30, 64, 175, 0.3); gap: 10px;">
+            💾 GRAVAR ENTRADA E GERAR TICKET
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+function mascaraKG(i) {
+    let v = i.value.replace(/\D/g, ""); // Remove tudo que não é número
+    v = v.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."); // Adiciona o ponto de milhar
+    i.value = v;
+}
+</script>

@@ -1,0 +1,112 @@
+<div class="clean-form">
+  <div class="clean-form__body">
+    <div class="clean-toolbar">
+      <div>
+        <h2 class="clean-title">Financeiro • Contas a Pagar</h2>
+        <div class="clean-help">Gere as parcelas, ajuste datas/valores conforme o boleto, e depois salve.</div>
+      </div>
+      <button id="btnRecarregar" class="clean-btn clean-btn--sm" type="button">Recarregar</button>
+    </div>
+
+    <div class="clean-grid">
+      <div class="clean-field c-col-4">
+        <div class="clean-label">Fornecedor / Para quem pagar</div>
+        <input id="inpPessoa" class="clean-input" placeholder="Ex: CEMIG, Claro, Fornecedor X">
+      </div>
+
+      <div class="clean-field c-col-4">
+        <div class="clean-label">Descrição</div>
+        <input id="inpDesc" class="clean-input" placeholder="Ex: Energia, Internet, Peças...">
+      </div>
+
+      <div class="clean-field c-col-2">
+        <div class="clean-label">1º vencimento (base)</div>
+        <input id="inpDataBase" class="clean-input" type="date">
+      </div>
+
+      <div class="clean-field c-col-2">
+        <div class="clean-label">Valor base (R$)</div>
+        <input id="inpValorBase" class="clean-input" type="number" step="0.01" min="0" placeholder="0,00">
+      </div>
+
+      <div class="clean-field c-col-6">
+        <div class="clean-label">Parcelamento</div>
+        <select id="selParc" class="clean-select">
+          <option value="avista">À vista</option>
+          <option value="30-60-90-120">30/60/90/120 (gera e você edita)</option>
+          <option value="30-60-90">30/60/90 (gera e você edita)</option>
+          <option value="custom">Personalizado (dias)</option>
+          <option value="datas">Personalizado (datas)</option>
+        </select>
+      </div>
+
+      <div class="clean-field c-col-6" id="wrapDias" style="display:none;">
+        <div class="clean-label">Dias (vírgula)</div>
+        <input id="inpDias" class="clean-input" placeholder="Ex: 0,30,60,90,120">
+      </div>
+
+      <div class="clean-field c-col-6" id="wrapDatas" style="display:none;">
+        <div class="clean-label">Datas (uma por vírgula)</div>
+        <input id="inpDatas" class="clean-input" placeholder="Ex: 2026-04-10,2026-05-10,2026-06-10">
+        <div class="clean-help">Formato YYYY-MM-DD</div>
+      </div>
+
+      <div class="clean-field c-col-6">
+        <div class="clean-label"> </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button id="btnGerar" class="clean-btn clean-btn--sm" type="button">Gerar parcelas</button>
+          <button id="btnSalvarParcelas" class="clean-btn clean-btn--primary clean-btn--sm" type="button">Salvar parcelas</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="msg" class="clean-alert" style="display:none;"></div>
+
+    <div class="clean-section">
+      <div class="clean-section__title">Parcelas (edite datas/valores antes de salvar)</div>
+
+      <div class="clean-table-wrap">
+        <table class="clean-table" id="tblParcelas" style="min-width:760px;">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Vencimento</th>
+              <th class="right">Valor (R$)</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="clean-actions">
+        <button id="btnAddParcela" class="clean-btn clean-btn--sm" type="button">+ Parcela</button>
+      </div>
+    </div>
+
+    <hr class="clean-section__rule" style="margin-top:14px;" />
+
+    <div class="clean-toolbar">
+      <div>
+        <div class="clean-section__title" style="margin:0;">Em aberto</div>
+        <div class="clean-help">Vencidos aparecem em vermelho.</div>
+      </div>
+    </div>
+
+    <div class="clean-table-wrap">
+      <table class="clean-table" id="tblAbertos">
+        <thead>
+          <tr>
+            <th>Vencimento</th>
+            <th>Fornecedor</th>
+            <th>Descrição</th>
+            <th class="right">Valor</th>
+            <th>Parcela</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>

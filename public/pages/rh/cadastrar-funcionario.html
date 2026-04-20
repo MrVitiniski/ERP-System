@@ -1,0 +1,198 @@
+<div class="clean-form">
+  <div class="clean-form__body">
+    <h2>Cadastrar Funcionário</h2>
+
+    <form id="frmFuncionario" autocomplete="off">
+      <!-- Dados pessoais -->
+      <div class="clean-section">
+        <div class="clean-section__title">Dados Pessoais</div>
+        <hr class="clean-section__rule"/>
+
+        <div class="clean-grid">
+          <div class="clean-field c-col-12">
+            <div class="clean-label">Nome *</div>
+            <input class="clean-input" name="nome_completo" required />
+          </div>
+
+          <div class="clean-field c-col-6">
+            <div class="clean-label">Data de Nascimento *</div>
+            <input class="clean-input" name="data_nascimento" type="date" required />
+          </div>
+
+          <div class="clean-field c-col-6">
+            <div class="clean-label">CPF *</div>
+            <input class="clean-input" name="cpf" placeholder="000.000.000-00" required />
+          </div>
+
+          <div class="clean-field c-col-6">
+            <div class="clean-label">Telefone</div>
+            <input class="clean-input" name="telefone" placeholder="(00) 00000-0000" />
+          </div>
+
+          <div class="clean-field c-col-6">
+            <div class="clean-label">Email</div>
+            <input class="clean-input" name="email" type="email" placeholder="email@empresa.com" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Endereço -->
+      <div class="clean-section">
+        <div class="clean-section__title">Endereço</div>
+        <hr class="clean-section__rule"/>
+
+        <div class="clean-grid">
+          <div class="clean-field c-col-3">
+            <div class="clean-label">CEP</div>
+            <input class="clean-input" name="endereco_cep" placeholder="00000-000" />
+          </div>
+
+          <div class="clean-field c-col-6">
+            <div class="clean-label">Cidade</div>
+            <input class="clean-input" name="endereco_cidade" />
+          </div>
+
+          <div class="clean-field c-col-3">
+            <div class="clean-label">Estado (UF)</div>
+            <input class="clean-input" name="endereco_uf" maxlength="2" placeholder="SC" />
+          </div>
+
+          <div class="clean-field c-col-12">
+            <div class="clean-label">Endereço</div>
+            <input class="clean-input" name="endereco_linha" placeholder="Rua, número, bairro" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Dados profissionais -->
+      <div class="clean-section">
+        <div class="clean-section__title">Dados Profissionais</div>
+        <hr class="clean-section__rule"/>
+
+        <div class="clean-grid">
+          <div class="clean-field c-col-6">
+            <div class="clean-label">Cargo</div>
+            <input class="clean-input" name="cargo" />
+          </div>
+
+          <div class="clean-field c-col-6">
+            <div class="clean-label">Setor</div>
+            <input class="clean-input" name="setor" />
+          </div>
+
+          <div class="clean-field c-col-6">
+            <div class="clean-label">Data de Admissão *</div>
+            <input class="clean-input" name="data_admissao" type="date" required />
+          </div>
+
+          <div class="clean-field c-col-3">
+            <div class="clean-label">Salário (opcional)</div>
+            <input class="clean-input" name="salario" type="number" step="0.01" min="0" />
+          </div>
+
+          <div class="clean-field c-col-3">
+            <div class="clean-label">Status</div>
+            <select class="clean-select" name="status">
+              <option value="ativo" selected>Ativo</option>
+              <option value="inativo">Inativo</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dados bancários -->
+      <div class="clean-section">
+        <div class="clean-section__title">Dados Bancários</div>
+        <hr class="clean-section__rule"/>
+
+        <div class="clean-grid">
+          <div class="clean-field c-col-6">
+            <div class="clean-label">Nome do banco</div>
+            <input class="clean-input" name="banco_nome" />
+          </div>
+
+          <div class="clean-field c-col-6">
+            <div class="clean-label">Chave Pix</div>
+            <input class="clean-input" name="pix_chave" />
+          </div>
+
+          <div class="clean-field c-col-3">
+            <div class="clean-label">Agência</div>
+            <input class="clean-input" name="banco_agencia" />
+          </div>
+
+          <div class="clean-field c-col-3">
+            <div class="clean-label">Conta</div>
+            <input class="clean-input" name="banco_conta" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Descontos -->
+      <div class="clean-section">
+        <div class="clean-section__title">Descontos em folha</div>
+        <hr class="clean-section__rule"/>
+
+        <div class="clean-grid">
+          <label class="clean-check c-col-6">
+            <input type="checkbox" name="emprestimo_folha" value="1" />
+            <span>Possui empréstimo descontado em folha</span>
+          </label>
+
+          <label class="clean-check c-col-6">
+            <input type="checkbox" name="pensao_folha" value="1" />
+            <span>Possui pensão descontada em folha</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="clean-actions">
+        <button class="clean-btn clean-btn--primary" type="submit">Salvar</button>
+        <button class="clean-btn" type="reset">Limpar</button>
+      </div>
+
+      <div id="msg" class="clean-alert" style="display:none;"></div>
+    </form>
+  </div>
+</div>
+
+      <div id="msg" class="alert" style="display:none;"></div>
+    </form>
+  </div>
+</div>
+<script>
+  const BASE = "/sistema/public";
+  const frm = document.getElementById("frmFuncionario");
+  const msg = document.getElementById("msg");
+
+  frm.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    msg.textContent = "Salvando...";
+
+    const fd = new FormData(frm);
+    const data = Object.fromEntries(fd.entries());
+
+    data.emprestimo_folha = fd.get("emprestimo_folha") ? 1 : 0;
+    data.pensao_folha = fd.get("pensao_folha") ? 1 : 0;
+
+    try {
+      const res = await fetch(`${BASE}/api/rh_create.php`, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      const out = await res.json().catch(() => ({}));
+      if (!res.ok || !out.ok) {
+        msg.textContent = "Erro: " + (out.error || "falha ao salvar");
+        return;
+      }
+
+      msg.textContent = `Salvo com sucesso! ID: ${out.id}`;
+      frm.reset();
+    } catch (e) {
+      msg.textContent = "Erro de rede ao salvar.";
+    }
+  });
+</script>

@@ -1,0 +1,95 @@
+<!-- RELATÓRIO DE MANUTENÇÃO -->
+<div class="clean-section" style="margin-top:50px; border-top: 2px solid #3b82f6; padding-top: 20px;">
+  <div class="clean-section__title" style="color: #1e40af;">Relatório Gerencial de OS</div>
+  <hr class="clean-section__rule">
+  
+  <div class="clean-grid" style="background: #f8fafc; padding: 20px; border-radius: 6px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
+    <div class="clean-field c-col-4">
+      <div class="clean-label">Início do Período</div>
+      <input type="date" class="clean-input" id="rel_data_de">
+    </div>
+    <div class="clean-field c-col-4">
+      <div class="clean-label">Fim do Período</div>
+      <input type="date" class="clean-input" id="rel_data_ate">
+    </div>
+    <div class="clean-field c-col-4" style="display: flex; gap: 10px; align-items: flex-end;">
+      <button type="button" class="clean-btn clean-btn--primary" id="btnGerarRelatorio" style="flex: 2; height: 42px; background: #1e40af;">
+    Gerar Dados
+</button>
+<button type="button" class="clean-btn" id="btnPDF" style="flex: 1; height: 42px; background: #64748b; color: white;">
+    PDF
+</button>
+
+    </div>
+  </div>
+
+  <div class="clean-table-wrap">
+    <table class="clean-table" id="tabelaRelatorioFinal">
+      <thead>
+        <tr style="background: #f1f5f9;">
+          <th>Nº OS</th>
+          <th>Abertura</th>
+          <th>Equipamento</th>
+          <th>Mecânico</th>
+          <th>Status</th>
+          <th style="text-align:right;">Encerramento</th>
+        </tr>
+      </thead>
+      <tbody id="tbodyRelatorio">
+        <tr><td colspan="6" style="text-align:center; padding: 40px; color: #94a3b8;">Selecione as datas.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+document.addEventListener('click', async function(e) {
+    if (e.target && e.target.id === 'btnGerarRelatorio') {
+        const de = document.getElementById('rel_data_de').value;
+        const ate = document.getElementById('rel_data_ate').value;
+        const tbody = document.getElementById('tbodyRelatorio');
+
+        if (!de || !ate) return alert("Informe o período.");
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px;">Buscando no banco...</td></tr>';
+
+        try {
+            // Tente este caminho. Se der erro, mude para: ../api/mecanica_get_relatorio.php
+            const res = await fetch(`api/mecanica_get_relatorio.php?inicio=${de}&fim=${ate}`);
+            const dados = await res.json();
+
+            if (!dados || dados.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:30px;">Nenhum registro encontrado.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = dados.map(os => `
+                <tr>
+                    <td style="font-weight:600; color: #1e40af;">#${os.id}</td>
+                    <td>${os.data_abertura ? new Date(os.data_abertura).toLocaleDateString('pt-BR') : '--'}</td>
+                    <td>${os.equipamento}</td>
+                    <td>${os.mecanico || '---'}</td>
+                    <td>
+                      <span style="font-size:10px; padding:2px 6px; border-radius:3px; font-weight:bold; 
+                        background:${os.status.toUpperCase().includes('ABERT') ? '#fff7ed' : '#dcfce7'}; 
+                        color:${os.status.toUpperCase().includes('ABERT') ? '#c2410c' : '#166534'};">
+                        ${os.status}
+                      </span>
+                    </td>
+                    <td style="text-align:right;">${os.data_encerramento ? new Date(os.data_encerramento).toLocaleDateString('pt-BR') : '--'}</td>
+                </tr>
+            `).join('');
+        } catch (err) {
+            console.error(err);
+            alert("Erro ao buscar dados. Verifique se o arquivo PHP existe na pasta API.");
+        }
+    }
+
+    if (e.target && e.target.id === 'btnPDF') {
+        const table = document.getElementById('tabelaRelatorioFinal').innerHTML;
+        const win = window.open('', '', 'height=700,width=900');
+        win.document.write('<html><head><title>Relatório OS</title><style>table{width:100%;border-collapse:collapse;} th,td{border:1px solid #ccc;padding:8px;text-align:left;}</style></head><body><h2>Relatório de OS</h2><table>' + table + '</table></body></html>');
+        win.document.close();
+        win.print();
+    }
+});
+</script>

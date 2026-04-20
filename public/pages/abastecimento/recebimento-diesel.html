@@ -1,0 +1,105 @@
+<div class="clean-form clean-form--wide">
+  <div class="clean-form__body">
+    <div class="clean-toolbar">
+      <div>
+        <h2 class="clean-title">Recebimento de Combustível (Diesel)</h2>
+        <div class="clean-help">Registre entradas e acompanhe o saldo (entradas - abastecimentos).</div>
+      </div>
+
+      <div style="display:flex; gap:10px;">
+        <button id="btnDieselLimpar" class="clean-btn clean-btn--sm" type="button">Limpar</button>
+        <button id="btnDieselSalvar" class="clean-btn clean-btn--primary clean-btn--sm" type="button">Salvar</button>
+      </div>
+    </div>
+
+    <div class="clean-section">
+      <div class="clean-section__title">Lançamento</div>
+      <hr class="clean-section__rule"/>
+
+      <div class="clean-grid">
+        <div class="clean-field c-col-3">
+          <div class="clean-label">Data *</div>
+          <input id="dieselDataHora" class="clean-input" type="datetime-local" required />
+        </div>
+
+        <div class="clean-field c-col-3">
+          <div class="clean-label">Litros recebidos *</div>
+          <input id="dieselLitros" class="clean-input" type="number" step="0.001" min="0.001" required />
+        </div>
+
+        <div class="clean-field c-col-3">
+          <div class="clean-label">Fornecedor *</div>
+          <!-- aceita dieselFornecedor ou dieselEmpresa; mas vamos padronizar aqui -->
+          <input id="dieselFornecedor" class="clean-input" required minlength="2" />
+        </div>
+
+        <div class="clean-field c-col-3">
+          <div class="clean-label">NF *</div>
+          <input id="dieselNF" class="clean-input" required minlength="1" />
+        </div>
+
+        <div class="clean-field c-col-3">
+          <div class="clean-label">Motorista *</div>
+          <input id="dieselMotorista" class="clean-input" required minlength="2" />
+        </div>
+
+        <div class="clean-field c-col-3">
+          <div class="clean-label">Placa caminhão *</div>
+          <input id="dieselPlaca" class="clean-input" required minlength="5" />
+        </div>
+
+        <div class="clean-field c-col-6">
+          <div class="clean-label">Observação *</div>
+          <input id="dieselObs" class="clean-input" required minlength="2" />
+        </div>
+      </div>
+
+      <div id="msgDiesel" class="clean-alert" style="display:none; margin-top:10px;"></div>
+    </div>
+
+    <div class="clean-section">
+      <div class="clean-section__title">Saldo</div>
+      <hr class="clean-section__rule"/>
+
+      <div class="clean-grid">
+        <div class="clean-field c-col-3">
+          <div class="clean-label">Entradas (L)</div>
+          <input id="saldoEntradas" class="clean-input" disabled />
+        </div>
+        <div class="clean-field c-col-3">
+          <div class="clean-label">Saídas (L)</div>
+          <input id="saldoSaidas" class="clean-input" disabled />
+        </div>
+        <div class="clean-field c-col-3">
+          <div class="clean-label">Saldo (L)</div>
+          <input id="saldoAtual" class="clean-input" disabled />
+        </div>
+      </div>
+    </div>
+
+    <div class="clean-section">
+      <div class="clean-section__title">Histórico</div>
+      <hr class="clean-section__rule"/>
+
+      <div class="clean-table-wrap">
+        <table class="clean-table" id="tblDiesel">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Data</th>
+              <th>Litros</th>
+              <th>Fornecedor</th>
+              <th>NF</th>
+              <th>Motorista</th>
+              <th>Placa</th>
+              <th>Obs</th>
+              <th>Usuário</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>

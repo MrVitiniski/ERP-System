@@ -1,0 +1,149 @@
+<div class="clean-form">
+  <div class="clean-form__body">
+    
+    <!-- HEADER -->
+    <div class="clean-toolbar">
+      <div>
+        <h2 class="clean-title">Entrada de Materiais</h2>
+        <div class="clean-help">Utilize o leitor de código de barras para agilizar o processo.</div>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button type="button" class="clean-btn clean-btn--sm" onclick="resetForm()">Limpar Tudo</button>
+      </div>
+    </div>
+
+    <!-- MENSAGEM DE SUCESSO (Invisível por padrão) -->
+    <div id="msgSucesso" class="clean-alert" style="display:none; background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; margin-bottom: 20px; padding: 15px; border-radius: 8px; font-weight: 600;">
+      ✅ Entrada registrada com sucesso no estoque!
+    </div>
+
+    <!-- FORMULÁRIO -->
+  <form id="formEntrada" class="clean-section" style="background: #fff; border-radius: 12px; padding: 24px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+  
+  <div class="clean-grid" style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px;">
+    
+    <!-- IDENTIFICAÇÃO -->
+    <div style="grid-column: span 12;">
+       <div class="clean-section__title" style="color: #2563eb; font-size: 1rem;">1. Identificação e Documentação</div>
+       <hr class="clean-section__rule">
+    </div>
+
+    <div class="clean-field" style="grid-column: span 4;">
+      <div class="clean-label">Cód. Barras / QR Code</div>
+      <input type="text" id="cod_barras" name="cod_barras" class="clean-input" placeholder="Aguardando bip..." style="border: 2px solid #6366f1; background: #f5f3ff; font-weight: bold;">
+    </div>
+
+    <div class="clean-field" style="grid-column: span 5;">
+      <div class="clean-label">Descrição do Item</div>
+      <input type="text" id="descricao" name="descricao" class="clean-input" placeholder="Nome do produto" required>
+    </div>
+
+    <div class="clean-field" style="grid-column: span 3;">
+      <div class="clean-label">Nota Fiscal (NF)</div>
+      <input type="text" id="nf" name="nf" class="clean-input" placeholder="Ex: 12345">
+    </div>
+
+    <!-- CONTROLE -->
+    <div style="grid-column: span 12; margin-top: 15px;">
+       <div class="clean-section__title" style="color: #2563eb; font-size: 1rem;">2. Controle de Estoque</div>
+       <hr class="clean-section__rule">
+    </div>
+
+    <div class="clean-field" style="grid-column: span 4;">
+      <div class="clean-label">Quantidade de Entrada</div>
+      <input type="number" id="qtd" name="quantidade" class="clean-input" min="1" value="1" required>
+    </div>
+
+    <div class="clean-field" style="grid-column: span 4;">
+      <div class="clean-label">Estoque Mínimo (Alerta)</div>
+      <input type="number" id="estoque_min" name="estoque_minimo" class="clean-input" placeholder="Qtd mínima p/ aviso">
+    </div>
+
+    <div class="clean-field" style="grid-column: span 4;">
+      <div class="clean-label">Segmento</div>
+      <select id="segmento" name="segmento" class="clean-input">
+        <option value="">Selecione...</option>
+        <option value="Mecânica">Mecânica</option>
+        <option value="EPIs">EPIs</option>
+        <option value="Insumos">Insumos</option>
+      </select>
+    </div>
+
+    <!-- LOGÍSTICA -->
+    <div style="grid-column: span 12; margin-top: 15px;">
+       <div class="clean-section__title" style="color: #2563eb; font-size: 1rem;">3. Localização (Endereço)</div>
+       <hr class="clean-section__rule">
+    </div>
+
+    <div class="clean-field" style="grid-column: span 4;">
+      <div class="clean-label">Setor Destino</div>
+      <select id="setor" name="setor_destino" class="clean-input">
+        <option value="Oficina">Oficina</option>
+        <option value="Laboratório">Laboratório</option>
+        <option value="Manutenção">Manutenção</option>
+      </select>
+    </div>
+
+    <div class="clean-field" style="grid-column: span 4;">
+      <div class="clean-label">Prateleira / Corredor</div>
+      <input type="text" id="local" name="localizacao" class="clean-input" placeholder="Ex: A-04">
+    </div>
+
+    <div class="clean-field" style="grid-column: span 4;">
+      <div class="clean-label">Andar / Nível</div>
+      <input type="text" id="andar" name="andar_nivel" class="clean-input" placeholder="Ex: Nível 2">
+    </div>
+
+    <div style="grid-column: span 12; text-align: right; margin-top: 30px;">
+      <button type="submit" class="clean-btn clean-btn--primary" style="padding: 14px 60px;">
+        Concluir Entrada
+      </button>
+    </div>
+  </div>
+</form>
+
+  </div>
+</div>
+
+<script>
+  const inputCod = document.getElementById('cod_barras');
+  const inputDesc = document.getElementById('descricao');
+  const form = document.getElementById('formEntrada');
+  const msgSucesso = document.getElementById('msgSucesso');
+
+  // 1. Focar automaticamente no Código de Barras ao abrir a página
+  window.onload = () => inputCod.focus();
+
+  // 2. Detectar "Enter" do leitor de código de barras e pular para Descrição
+  inputCod.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault(); // Impede o envio do form antes da hora
+      inputDesc.focus();  // Pula para o próximo campo
+    }
+  });
+
+  // 3. Simular o envio dos dados
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    // Pega todos os dados do formulário
+    const formData = new FormData(this);
+
+    // Envia para o PHP que criamos
+    const res = await fetch('../api/estoque_salvar.php', {
+        method: 'POST',
+        body: formData
+    });
+
+    const out = await res.json();
+
+    if (out.ok) {
+        msgSucesso.style.display = 'block'; // Mostra o alerta verde
+        this.reset(); // Limpa os campos
+        inputCod.focus(); // Volta o foco para o código de barras
+        setTimeout(() => msgSucesso.style.display = 'none', 3000);
+    } else {
+        alert("Erro ao salvar: " + out.error);
+    }
+});
+</script>

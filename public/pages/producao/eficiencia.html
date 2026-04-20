@@ -1,0 +1,36 @@
+<div class="clean-form">
+  <div class="clean-form__body">
+    <div class="clean-toolbar">
+      <h2 class="clean-title">⚡ Eficiência da Produção</h2>
+    </div>
+
+    <!-- FILTRO CORRIGIDO -->
+    <div class="clean-section" style="background:#f8fafc; padding:20px; border-radius:8px; border:1px solid #e2e8f0;">
+      <div class="clean-grid" style="display: flex; align-items: flex-end; gap: 15px;">
+        <div style="flex: 1;">
+          <div class="clean-label">Data Início</div>
+          <input type="date" id="data_inicio" class="clean-input">
+        </div>
+        <div style="flex: 1;">
+          <div class="clean-label">Data Fim</div>
+          <input type="date" id="data_fim" class="clean-input">
+        </div>
+        <div style="flex: 0.5;">
+         <button id="btnAnalisar" onclick="carregarEficiencia()" 
+        style="background: #2563eb; color: white; padding: 10px 25px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; font-size: 14px; transition: background 0.3s; display: flex; align-items: center; gap: 8px;">
+        🔍 Analisar Período
+    </button>
+          <button id="btnGerarPDF" onclick="gerarRelatorioPDF()" style="display: none; background:#dc2626; color:white; padding:10px 15px; border-radius:8px; border:none; cursor:pointer; margin-left:10px;">
+    📄 Imprimir
+</button>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ONDE OS CARDS VÃO APARECER -->
+    <div id="painelEficiencia" style="margin-top:20px;"></div>
+  </div>
+</div>
+
+<script src="/sistema/public/pages/controllers/prod-eficiencia.js"></script>

@@ -1,0 +1,133 @@
+<div class="clean-form">
+  <div class="clean-form__body">
+    
+    <!-- HEADER DA PÁGINA -->
+    <div class="clean-toolbar">
+      <div>
+        <h2 class="clean-title" style="color: #e11d48;">Saída de Materiais</h2>
+        <div class="clean-help">Registre a retirada de itens do estoque e o destino do material.</div>
+      </div>
+      <div>
+        <button type="button" class="clean-btn clean-btn--sm" onclick="resetSaida()">Limpar</button>
+      </div>
+    </div>
+
+    <!-- MENSAGEM DE SUCESSO -->
+    <div id="msgSaida" class="clean-alert" style="display:none; background: #fff1f2; color: #9f1239; border: 1px solid #fecdd3; margin-bottom: 20px; padding: 15px; border-radius: 8px; font-weight: 600;">
+      📤 Saída registrada! Estoque atualizado.
+    </div>
+
+    <!-- FORMULÁRIO DE SAÍDA -->
+    <form id="formSaida" class="clean-section" style="background: #fff; border-radius: 12px; padding: 24px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+      
+      <div class="clean-grid" style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px;">
+        
+        <!-- SEÇÃO 1: RESPONSABILIDADE -->
+        <div style="grid-column: span 12;">
+           <div class="clean-section__title" style="color: #e11d48; font-size: 1rem;">1. Responsável e Destino</div>
+           <hr class="clean-section__rule"/>
+        </div>
+
+        <!-- Quem Retirou -->
+        <div class="clean-field" style="grid-column: span 5;">
+          <div class="clean-label">Nome do Colaborador / Requerente</div>
+          <input type="text" id="colaborador" name="colaborador" class="clean-input" placeholder="Quem está levando o item?" required>
+        </div>
+
+        <!-- Setor de Destino -->
+        <div class="clean-field" style="grid-column: span 4;">
+          <div class="clean-label">Setor de Aplicação</div>
+          <select id="setor_destino" name="setor_destino" class="clean-input" required>
+            <option value="">Selecione o setor...</option>
+            <option>Mecânica</option>
+            <option>Oficina</option>
+            <option>Laboratório</option>
+            <option>Manutenção Predial</option>
+          </select>
+        </div>
+
+        <!-- Data e Hora (Automático) -->
+        <div class="clean-field" style="grid-column: span 3;">
+          <div class="clean-label">Data e Hora da Saída</div>
+          <input type="datetime-local" id="data_hora" class="clean-input" style="background: #f8fafc; color: #64748b;" readonly>
+        </div>
+
+        <!-- SEÇÃO 2: O QUE ESTÁ SAINDO -->
+        <div style="grid-column: span 12; margin-top: 15px;">
+           <div class="clean-section__title" style="color: #e11d48; font-size: 1rem;">2. Itens Retirados</div>
+           <hr class="clean-section__rule"""/>
+        </div>
+
+        <!-- Cód. Barras para Saída Rápida -->
+        <div class="clean-field" ...>
+  <div class="clean-label">Bipar Item (Opcional)</div>
+  <input type="text" name="saida_cod_barras" id="saida_cod_barras" class="clean-input">
+</div>
+
+        <!-- Item/Descrição -->
+        <div class="clean-field" ...>
+  <div class="clean-label">Item / Descrição</div>
+  <select id="saida_item" name="saida_item" class="clean-input" required>
+    <option value="">Carregando itens do estoque...</option>
+  </select>
+</div>
+
+
+        <!-- Quantidade Retirada -->
+        <div class="clean-field" ...>
+  <div class="clean-label">Quantidade Retirada</div>
+  <input type="number" name="saida_qtd" id="saida_qtd" class="clean-input" min="1" value="1" required>
+</div>
+
+        <!-- Observações Adicionais -->
+        <div class="clean-field" style="grid-column: span 12;">
+          <div class="clean-label">Observação / Finalidade (Opcional)</div>
+          <input type="text" class="clean-input" name="observacao" placeholder="Ex: Reparo na máquina X, Troca de lâmpada do pátio...">
+        </div>
+
+        <!-- BOTÃO DE CONFIRMAÇÃO -->
+        <div style="grid-column: span 12; text-align: right; margin-top: 30px; border-top: 1px solid #f1f5f9; padding-top: 20px;">
+          <button type="submit" class="clean-btn" style="background: #e11d48; color: white; padding: 14px 60px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.2s;">
+            Confirmar Baixa de Estoque
+          </button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  // 1. Preencher data e hora automaticamente ao carregar
+  function atualizarDataHora() {
+    const agora = new Date();
+    const offset = agora.getTimezoneOffset() * 60000;
+    const localISOTime = (new Date(agora - offset)).toISOString().slice(0, 16);
+    document.getElementById('data_hora').value = localISOTime;
+  }
+
+  // Chamar função ao abrir a aba
+  atualizarDataHora();
+
+  const formS = document.getElementById('formSaida');
+  const msgS = document.getElementById('msgSaida');
+
+  formS.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Mostra o alerta de saída
+    msgS.style.display = 'block';
+    
+    setTimeout(() => {
+      resetSaida();
+      msgS.style.display = 'none';
+      atualizarDataHora(); // Reseta para a hora atual do próximo bip
+    }, 2500);
+  });
+
+  function resetSaida() {
+    formS.reset();
+    document.getElementById('colaborador').focus();
+    atualizarDataHora();
+  }
+</script>

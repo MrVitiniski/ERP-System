@@ -1,0 +1,151 @@
+<div class="main">
+  <header class="topbar">
+    <div class="topbar__left">
+      <div class="breadcrumbs">
+        <h1 class="breadcrumbs__title">Apontamento de Produção</h1>
+        <div class="breadcrumbs__path">Produção / Movimentação / Horário</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="content">
+    <div class="clean-form">
+      <div class="clean-form__body">
+        
+        <h2 class="clean-title">📊 Registro de Produtividade</h2>
+
+        <!-- CABEÇALHO DE IDENTIFICAÇÃO -->
+        <div class="clean-section">
+          <div class="clean-grid">
+            <div class="clean-field c-col-3">
+              <label class="clean-label">Data da Produção</label>
+              <input type="date" id="data_prod" class="clean-input">
+            </div>
+            <div class="clean-field c-col-3">
+              <label class="clean-label">Turno Operacional</label>
+              <select id="select_turno" class="clean-select" onchange="gerarLinhasHorarias()">
+                <option value="1">1º Turno (07:00 - 15:20)</option>
+                <option value="2">2º Turno (15:00 - 23:20)</option>
+                <option value="3">3º Turno (23:00 - 07:20)</option>
+              </select>
+            </div>
+            <div class="clean-field c-col-3">
+              <label class="clean-label">Responsável pelo Turno</label>
+              <input type="text" id="responsavel_turno" class="clean-input" placeholder="Nome do Responsável">
+            </div>
+            <div class="clean-field c-col-3">
+              <label class="clean-label">Operador da Sala</label>
+              <input type="text" id="operador_sala" class="clean-input" placeholder="Nome do Operador">
+            </div>
+          </div>
+        </div>
+
+       <!-- TABELA DE APONTAMENTO -->
+<div class="clean-table-wrap" style="margin-top: 25px;">
+  <table class="clean-table">
+    <thead>
+      <tr>
+        <th class="col-hora">HORA</th>
+        <th class="col-maquina">MÁQUINA</th>
+        <th class="col-conchas">CONCHADAS</th>
+        <th class="col-ton">TON (TC01)</th>
+        <th class="col-tc">TC02</th>
+        <th class="col-tc">TC03</th>
+        <th class="col-tc">TC04</th>
+        <th class="col-tc">TC05</th>
+        <th class="col-parada">MIN. PARADA</th>
+        <th class="col-motivo">MOTIVO DA PARADA</th>
+      </tr>
+    </thead>
+    <tbody id="corpoTabelaHoraria"></tbody>
+    <tfoot>
+      <tr class="totals-row">
+        <td colspan="3" style="text-align:right; padding-right:25px; font-weight:900;">TOTAIS ACUMULADOS:</td>
+        <td id="res_tc01" style="text-align:center; color:#4f8cff; font-weight:900;">0.00 t</td>
+        <td id="res_tc02" style="text-align:center;">0.00 t</td>
+        <td id="res_tc03" style="text-align:center;">0.00 t</td>
+        <td id="res_tc04" style="text-align:center;">0.00 t</td>
+        <td id="res_tc05" style="text-align:center;">0.00 t</td>
+        <td id="res_min_parada" style="text-align:center; color:#e11d48; font-weight:900;">0 min</td>
+        <td style="text-align:center; color:#94a3b8;">-</td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+        <!-- BOTÃO ENCERRAR -->
+        <div class="clean-actions" style="margin-top: 30px;">
+          <button id="btnEncerrar" 
+                  onclick="encerrarTurnoEGerarRelatorio()" 
+                  class="clean-btn clean-btn--primary" 
+                  style="width: 100%; height: 55px; font-size: 16px;">
+            🔒 Encerrar Turno e Gerar Relatório
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <script>
+// Usamos uma função anônima para evitar conflitos de variáveis
+(function() {
+    console.log("🚀 Sistema de Auto-Save Scavare Iniciado...");
+
+    function executarAutoSaveGeral() {
+        const corpo = document.getElementById('corpoTabelaHoraria');
+        const campoData = document.getElementById('data_prod');
+
+        // Só prossegue se a tabela e a data estiverem presentes na tela
+        if (!corpo || !campoData || !campoData.value) {
+            return; 
+        }
+
+        const linhas = corpo.querySelectorAll('tr');
+        const todosOsLancamentos = [];
+
+        linhas.forEach(linha => {
+            const dadosLinha = {
+                data: campoData.value,
+                hora: linha.cells[0]?.innerText.trim(),
+                maquina: linha.querySelector('select')?.value || 'WA320',
+                conchadas: linha.querySelector('input:nth-of-type(1)')?.value || 0,
+                tc01: linha.querySelector('input:nth-of-type(2)')?.value || 0,
+                tc02: linha.querySelector('input:nth-of-type(3)')?.value || 0,
+                tc03: linha.querySelector('input:nth-of-type(4)')?.value || 0,
+                tc04: linha.querySelector('input:nth-of-type(5)')?.value || 0,
+                tc05: linha.querySelector('input:nth-of-type(6)')?.value || 0,
+                minutos_parada: linha.querySelector('input:nth-of-type(7)')?.value || 0,
+                motivo_parada: linha.querySelector('input:last-of-type')?.value || ''
+            };
+            
+            // Critério: só envia se houver algum valor preenchido na linha
+            if (parseFloat(dadosLinha.tc01) > 0 || parseInt(dadosLinha.conchadas) > 0 || parseInt(dadosLinha.minutos_parada) > 0) {
+                todosOsLancamentos.push(dadosLinha);
+            }
+        });
+
+        if (todosOsLancamentos.length > 0) {
+            // URL absoluta para evitar erros de diretório
+            fetch('/sistema/api/save_producao_lote.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(todosOsLancamentos)
+            })
+            .then(r => r.json())
+            .then(res => {
+                if(res.ok) {
+                    console.log("%c✔ Sincronizado: " + new Date().toLocaleTimeString(), "color: #10b981; font-weight: bold;");
+                }
+            })
+            .catch(err => console.error("Erro na sincronização:", err));
+        }
+    }
+
+    // Limpa qualquer intervalo anterior para não duplicar o processo
+    if (window.autoSaveInterval) clearInterval(window.autoSaveInterval);
+    
+    // Define o novo intervalo de 5 segundos
+    window.autoSaveInterval = setInterval(executarAutoSaveGeral, 5000);
+})();
+</script>
+</div>

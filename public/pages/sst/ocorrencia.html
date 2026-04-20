@@ -1,0 +1,34 @@
+<section class="card">
+  <h2 style="margin-top:0;">SST · Registro de Ocorrência</h2>
+</section>
+
+<section class="card" style="margin-top:12px;">
+  <form id="f" class="form">
+    <div class="row">
+      <label>Data<br><input name="data" type="date" required></label>
+      <label>Hora<br><input name="hora" type="time" required></label>
+    </div>
+
+    <div class="row">
+      <label>Local<br><input name="local" required></label>
+      <label>Envolvido<br><input name="envolvido" required></label>
+    </div>
+
+    <label>Descrição<br><input name="descricao" required maxlength="220"></label>
+    <label>Ação imediata<br><input name="acao" maxlength="220"></label>
+
+    <button class="btn btn-primary" type="submit">Registrar ocorrência</button>
+    <span id="msg" style="margin-left:10px; opacity:.85;"></span>
+  </form>
+</section>
+
+<script>
+  const f = document.getElementById("f");
+  const msg = document.getElementById("msg");
+  f.addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    console.log("SST ocorrencia (MVP)", Object.fromEntries(new FormData(f).entries()));
+    msg.textContent = "Registrado (MVP).";
+    f.reset();
+  });
+</script>

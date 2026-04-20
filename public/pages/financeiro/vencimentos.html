@@ -1,0 +1,56 @@
+<div class="clean-form">
+  <div class="clean-form__body">
+    <div class="clean-toolbar">
+      <div>
+        <h2 class="clean-title">Financeiro • Vencimentos</h2>
+        <div class="clean-help">Contas a pagar em aberto, ordenadas por vencimento.</div>
+      </div>
+      <button id="btnRecarregar" class="clean-btn clean-btn--sm" type="button">Recarregar</button>
+    </div>
+
+    <div class="clean-grid" style="margin-top:10px;">
+      <div class="clean-field c-col-6">
+        <div class="clean-label">Buscar fornecedor</div>
+        <input id="inpFornecedor" class="clean-input" placeholder="Ex: CEMIG, Claro, Fornecedor X">
+        <div class="clean-help">Filtra por Fornecedor e também por Descrição.</div>
+      </div>
+
+      <div class="clean-field c-col-3">
+        <div class="clean-label">De</div>
+        <input id="inpDe" class="clean-input" type="date">
+      </div>
+
+      <div class="clean-field c-col-3">
+        <div class="clean-label">Até</div>
+        <input id="inpAte" class="clean-input" type="date">
+      </div>
+
+      <div class="clean-field c-col-12">
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button id="btnFiltrar" class="clean-btn clean-btn--sm" type="button">Filtrar</button>
+          <button id="btnLimpar" class="clean-btn clean-btn--sm" type="button">Limpar</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="msg" class="clean-alert" style="display:none; margin-top:10px;"></div>
+
+    <div class="clean-table-wrap" style="margin-top:12px;">
+      <table class="clean-table" id="tblVencimentos" style="min-width:980px;">
+        <thead>
+          <tr>
+            <th>Vencimento</th>
+            <th>Fornecedor</th>
+            <th>Descrição</th>
+            <th class="right">Valor</th>
+            <th>Parcela</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="clean-help" id="resumo" style="margin-top:8px;"></div>
+  </div>
+</div>

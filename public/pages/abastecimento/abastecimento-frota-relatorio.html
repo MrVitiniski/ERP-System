@@ -1,0 +1,74 @@
+<div class="clean-form clean-form--wide">
+  <div class="clean-form__body">
+    <div class="clean-toolbar">
+      <div>
+        <h2 class="clean-title">Relatório - Abastecimento (Frota)</h2>
+        <div class="clean-help">Acompanhe abastecimentos por período e gráfico semanal.</div>
+      </div>
+
+      <div style="display:flex; gap:10px; align-items:end;">
+        <div class="clean-field" style="min-width:220px;">
+          <div class="clean-label">De</div>
+          <input id="relDe" class="clean-input" type="date" />
+        </div>
+
+        <div class="clean-field" style="min-width:220px;">
+          <div class="clean-label">Até</div>
+          <input id="relAte" class="clean-input" type="date" />
+        </div>
+
+        <button id="btnRelGerar" class="clean-btn clean-btn--primary clean-btn--sm" type="button">Gerar</button>
+      </div>
+    </div>
+
+    <div id="msgRel" class="clean-alert" style="display:none; margin-top:10px;"></div>
+
+    <div class="clean-section" style="margin-top:14px;">
+      <div class="clean-section__title">Resumo do período</div>
+      <hr class="clean-section__rule"/>
+      <div class="clean-grid">
+        <div class="clean-field c-col-3">
+          <div class="clean-label">Total litros</div>
+          <input id="kpiLitros" class="clean-input" disabled />
+        </div>
+        <div class="clean-field c-col-3">
+          <div class="clean-label">Qtd abastecimentos</div>
+          <input id="kpiQtd" class="clean-input" disabled />
+        </div>
+        <div class="clean-field c-col-3">
+          <div class="clean-label">Média (L/abast.)</div>
+          <input id="kpiMedia" class="clean-input" disabled />
+        </div>
+      </div>
+    </div>
+
+    <div class="clean-section" style="margin-top:14px;">
+      <div class="clean-section__title">Gráfico (últimos 7 dias)</div>
+      <hr class="clean-section__rule"/>
+      <canvas id="chartSemana" height="90"></canvas>
+      <div class="clean-help" style="margin-top:8px;">Mostra litros por dia (semana atual / últimos 7 dias).</div>
+    </div>
+
+    <div class="clean-section" style="margin-top:14px;">
+      <div class="clean-section__title">Detalhado</div>
+      <hr class="clean-section__rule"/>
+      <div class="clean-table-wrap">
+        <table class="clean-table" id="tblRel">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Data</th>
+              <th>Frentista</th>
+              <th>Equipamento</th>
+              <th>Operador</th>
+              <th>Horímetro</th>
+              <th>Litros</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>

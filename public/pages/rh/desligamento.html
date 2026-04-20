@@ -1,0 +1,117 @@
+<div class="clean-form">
+  <div class="clean-form__body">
+    <div class="clean-toolbar">
+      <div>
+        <h2 class="clean-title">Desligamento</h2>
+        <div class="clean-help">Registre pedido/processo e consulte o histórico.</div>
+      </div>
+
+      <div style="display:flex; gap:10px;">
+        <button id="btnDesligLimpar" class="clean-btn clean-btn--sm" type="button">Limpar</button>
+        <button id="btnDesligSalvar" class="clean-btn clean-btn--primary clean-btn--sm" type="button">Salvar</button>
+      </div>
+    </div>
+
+    <div class="clean-section">
+      <div class="clean-section__title">Buscar funcionário</div>
+      <hr class="clean-section__rule"/>
+
+      <div class="clean-grid">
+        <div class="clean-field c-col-12 ac">
+          <div class="clean-label">Nome ou CPF *</div>
+          <input id="qFuncionario" class="clean-input" placeholder="Digite pelo menos 2 letras ou 3 números..." autocomplete="off" />
+          <div class="clean-help">Selecione um resultado para preencher os dados.</div>
+
+          <div id="acList" class="ac__list" role="listbox" aria-label="Resultados"></div>
+        </div>
+
+        <div class="clean-field c-col-6">
+          <div class="clean-label">Funcionário (auto)</div>
+          <input id="funcNome" class="clean-input" disabled placeholder="—" />
+        </div>
+
+        <div class="clean-field c-col-3">
+          <div class="clean-label">CPF (auto)</div>
+          <input id="funcCpf" class="clean-input" disabled placeholder="—" />
+        </div>
+
+        <div class="clean-field c-col-3">
+          <div class="clean-label">Admissão (auto)</div>
+          <input id="funcAdmissao" class="clean-input" type="date" disabled />
+        </div>
+      </div>
+    </div>
+
+    <div class="clean-section">
+      <div class="clean-section__title">Pedido de desligamento</div>
+      <hr class="clean-section__rule"/>
+
+      <form id="frmDesligamento" autocomplete="off">
+        <input type="hidden" id="funcId" name="funcionario_id" />
+
+        <div class="clean-grid">
+          <div class="clean-field c-col-4">
+            <div class="clean-label">Tipo *</div>
+            <select id="tipo" class="clean-select" name="tipo" required>
+              <option value="" selected disabled>Selecione...</option>
+              <option value="demissao">Demissão (pedido)</option>
+              <option value="sem_justa_causa">Sem justa causa</option>
+              <option value="justa_causa">Justa causa</option>
+            </select>
+          </div>
+
+          <div class="clean-field c-col-4">
+            <div class="clean-label">Data do desligamento *</div>
+            <input id="dataDeslig" class="clean-input" type="date" name="data_desligamento" required />
+          </div>
+
+          <div class="clean-field c-col-12">
+            <div class="clean-label">Motivo do desligamento *</div>
+            <input id="motivo" class="clean-input" name="motivo" required placeholder="Ex: pedido do funcionário, reestruturação, desempenho..." />
+          </div>
+
+          <div class="clean-field c-col-12">
+            <div class="clean-label">Observações (opcional)</div>
+            <textarea id="obs" class="clean-input" name="observacoes" style="height:auto; min-height:96px;" placeholder="Pendências, anotações, etc..."></textarea>
+          </div>
+        </div>
+      </form>
+
+      <div id="msgDeslig" class="clean-alert" style="display:none;"></div>
+    </div>
+
+    <div class="clean-section">
+      <div class="clean-section__title">Histórico</div>
+      <hr class="clean-section__rule"/>
+
+      <div class="clean-grid">
+  <div class="clean-field c-col-6">
+    <div class="clean-label">Filtro (nome/CPF)</div>
+    <input id="histQ" class="clean-input" placeholder="Digite para filtrar..." />
+  </div>
+
+  <div class="c-col-12" style="margin-top:12px;">
+    <div class="clean-table-wrap">
+      <table class="clean-table" id="tblDeslig">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Funcionário</th>
+            <th>CPF</th>
+            <th>Admissão</th>
+            <th>Data</th>
+            <th>Tipo</th>
+            <th>Motivo</th>
+            <th>Status Funcionário</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="clean-help" style="margin-top:10px;">
+      Ao salvar, o funcionário é marcado como <b>inativo</b> automaticamente.
+    </div>
+  </div>
+</div>

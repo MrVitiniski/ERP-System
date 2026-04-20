@@ -1,0 +1,46 @@
+<div class="clean-form">
+  <div class="clean-form__body">
+    <div class="clean-toolbar">
+      <div>
+        <h2 class="clean-title">Relatório Diário de Movimentações</h2>
+        <div id="data_atual" class="clean-help">Carregando data...</div>
+      </div>
+      <button class="clean-btn clean-btn--sm clean-btn--primary" onclick="window.print()">Imprimir PDF</button>
+    </div>
+
+    <!-- CARDS DE RESUMO -->
+    <div class="clean-grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin: 20px 0;">
+       <div style="background: #f0f9ff; border: 1px solid #bae6fd; padding: 15px; border-radius: 8px;">
+          <span style="font-size: 0.75rem; color: #0369a1; font-weight: 700;">ENTRADAS HOJE</span>
+          <div id="resumo_entradas" style="font-size: 1.5rem; font-weight: 800; color: #0c4a6e;">0</div>
+       </div>
+       <div style="background: #fff1f2; border: 1px solid #fecdd3; padding: 15px; border-radius: 8px;">
+          <span style="font-size: 0.75rem; color: #991b1b; font-weight: 700;">SAÍDAS HOJE</span>
+          <div id="resumo_saidas" style="font-size: 1.5rem; font-weight: 800; color: #b91c1c;">0</div>
+       </div>
+       <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 8px;">
+          <span style="font-size: 0.75rem; color: #64748b; font-weight: 700;">TOTAL DE OPERAÇÕES</span>
+          <div id="resumo_total" style="font-size: 1.5rem; font-weight: 800; color: #1e293b;">0</div>
+       </div>
+    </div>
+
+    <div class="clean-section">
+      <div class="clean-table-wrap" style="border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; background: white;">
+        <table class="clean-table" id="tabelaRelatorio">
+          <thead style="background: #f8fafc;">
+            <tr>
+              <th style="padding: 12px;">Hora</th>
+              <th style="padding: 12px;">Tipo</th>
+              <th style="padding: 12px;">Item</th>
+              <th style="padding: 12px; text-align: center;">Qtd</th>
+              <th style="padding: 12px;">Responsável / Setor</th>
+            </tr>
+          </thead>
+          <tbody>
+             <!-- Itens via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

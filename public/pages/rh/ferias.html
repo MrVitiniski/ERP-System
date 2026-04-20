@@ -1,0 +1,113 @@
+<div class="clean-form">
+  <div class="clean-form__body">
+    <div class="clean-toolbar">
+      <div>
+        <h2 class="clean-title">Férias</h2>
+        <div class="clean-help">Digite nome ou CPF, veja o cálculo automático e registre a concessão.</div>
+      </div>
+
+      <div style="display:flex; gap:10px;">
+        <button id="btnFeriasLimpar" class="clean-btn clean-btn--sm" type="button">Limpar</button>
+        <button id="btnFeriasSalvar" class="clean-btn clean-btn--primary clean-btn--sm" type="button">Salvar</button>
+      </div>
+    </div>
+
+    <div class="clean-section">
+      <div class="clean-section__title">Buscar funcionário</div>
+      <hr class="clean-section__rule"/>
+
+      <div class="clean-grid">
+        <div class="clean-field c-col-12 ac">
+          <div class="clean-label">Nome ou CPF *</div>
+          <input id="qFuncionario" class="clean-input" placeholder="Digite pelo menos 2 letras ou 3 números..." autocomplete="off" />
+          <div class="clean-help">Selecione um resultado para carregar admissão e cálculo.</div>
+
+          <div id="acList" class="ac__list" role="listbox" aria-label="Resultados"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="clean-section">
+      <div class="clean-section__title">Informações</div>
+      <hr class="clean-section__rule"/>
+
+      <div class="clean-grid">
+        <div class="clean-field c-col-6">
+          <div class="clean-label">Funcionário (auto)</div>
+          <input id="funcNome" class="clean-input" disabled placeholder="—" />
+        </div>
+
+        <div class="clean-field c-col-3">
+          <div class="clean-label">CPF (auto)</div>
+          <input id="funcCpf" class="clean-input" disabled placeholder="—" />
+        </div>
+
+        <div class="clean-field c-col-3">
+          <div class="clean-label">Admissão (auto)</div>
+          <input id="funcAdmissao" class="clean-input" type="date" disabled />
+        </div>
+
+        <div class="clean-field c-col-3">
+          <div class="clean-label">Pode tirar férias a partir de</div>
+          <input id="podeAPartir" class="clean-input" type="date" disabled />
+        </div>
+
+        <div class="clean-field c-col-3">
+          <div class="clean-label">Período aquisitivo (início)</div>
+          <input id="aquisInicio" class="clean-input" type="date" disabled />
+        </div>
+
+        <div class="clean-field c-col-3">
+          <div class="clean-label">Período aquisitivo (fim)</div>
+          <input id="aquisFim" class="clean-input" type="date" disabled />
+        </div>
+
+        <div class="clean-field c-col-3">
+          <div class="clean-label">Férias vencidas?</div>
+          <input id="feriasVencida" class="clean-input" disabled value="—" />
+          <div class="clean-help">Vencida = passou do período concessivo sem registrar.</div>
+        </div>
+      </div>
+
+      <div id="msgFerias" class="clean-alert" style="display:none;"></div>
+    </div>
+
+    <div class="clean-section">
+      <div class="clean-section__title">Sugestão de concessão</div>
+      <hr class="clean-section__rule"/>
+
+      <form id="frmFerias" autocomplete="off">
+        <input type="hidden" id="funcId" name="funcionario_id" />
+        <input type="hidden" id="hAquisInicio" name="aquisitivo_inicio" />
+        <input type="hidden" id="hAquisFim" name="aquisitivo_fim" />
+
+        <div class="clean-grid">
+          <div class="clean-field c-col-3">
+            <div class="clean-label">Início sugerido</div>
+            <input id="gozoInicio" class="clean-input" type="date" name="gozo_inicio" />
+          </div>
+
+          <div class="clean-field c-col-2">
+            <div class="clean-label">Dias</div>
+            <input id="dias" class="clean-input" type="number" min="1" max="60" name="dias" value="30" />
+          </div>
+
+          <div class="clean-field c-col-3">
+            <div class="clean-label">Fim (auto)</div>
+            <input id="gozoFim" class="clean-input" type="date" disabled />
+          </div>
+
+          <div class="clean-field c-col-4">
+            <div class="clean-label">Retorno (auto)</div>
+            <input id="retorno" class="clean-input" type="date" disabled />
+          </div>
+
+          <div class="clean-field c-col-12">
+            <div class="clean-label">Observações (opcional)</div>
+            <textarea id="obs" class="clean-input" name="observacoes" style="height:auto; min-height:96px;" placeholder="Observações internas..."></textarea>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
